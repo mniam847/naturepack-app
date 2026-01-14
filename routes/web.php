@@ -56,10 +56,10 @@ Route::get('/lang/{locale}', function ($locale) {
 
 // GROUP ADMIN (Harus Login)
 Route::middleware(['auth'])->prefix('admin')->group(function () {
-    
+
     // Dashboard Utama (Pesanan)
     Route::get('/dashboard', [App\Http\Controllers\OrderController::class, 'index'])->name('admin.dashboard');
-    
+
     // Kelola Admin (Tambah Akun)
     Route::get('/users', [App\Http\Controllers\OrderController::class, 'users'])->name('admin.users');
     Route::post('/users', [App\Http\Controllers\OrderController::class, 'storeUser'])->name('admin.users.store');
@@ -67,6 +67,6 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     // Ganti Password
     Route::get('/settings', [App\Http\Controllers\OrderController::class, 'settings'])->name('admin.settings');
     Route::put('/settings', [App\Http\Controllers\OrderController::class, 'updatePassword'])->name('admin.settings.update');
-    
+
     // ... route update status pesanan yang lama tetap disini ...
 });

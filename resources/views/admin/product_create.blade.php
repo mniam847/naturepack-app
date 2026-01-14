@@ -6,6 +6,16 @@
     <div class="bg-white p-8 rounded-lg shadow-lg">
         <h2 class="text-2xl font-bold text-gray-800 mb-6">Tambah Produk Baru</h2>
 
+        @if ($errors->any())
+            <div class="alert alert-danger" style="color: red; border: 1px solid red; padding: 10px;">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         <form action="{{ route('product.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
 

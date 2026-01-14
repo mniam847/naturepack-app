@@ -19,8 +19,9 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex items-center">
-                <a href="{{ route('home') }}" class="text-2xl font-bold text-blue-900">
-                    Box<span class="text-orange-500">Custom</span>
+                <a href="{{ route('home') }}" class="flex items-center gap-2 text-2xl font-bold text-blue-900">
+                    <img src="{{ asset('images/Logo Nature Pack.jpeg') }}" alt="Logo Nature Pack" class="h-10 w-auto"> 
+                    Nature<span class="text-orange-500">Pack</span>
                 </a>
             </div>
 

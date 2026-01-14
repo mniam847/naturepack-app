@@ -48,7 +48,7 @@ class ProductController extends Controller
     {
         // Cari produk berdasarkan ID, kalau tidak ada tampilkan error 404
         $product = Product::findOrFail($id);
-        
+
         // Kirim data produk ke view 'product_show'
         return view('product_show', compact('product'));
     }
