@@ -5,8 +5,9 @@ return [
     'home' => '主页',
     'about' => '关于我们',
     'product' => '产品',
-    'shipping' => '运输信息',
-    'contact' => '联系 / 订购',
+    'order' => '订购',
+    'contact' => '联系我们',
+    'faq' => '常见问题解答',
 
     // Hero Section
     'welcome' => '为您的品牌提供优质包装',
@@ -79,4 +80,10 @@ return [
     'ship_ready_desc' => '付款后次日发货。',
     'ship_custom_order' => '定制订单',
     'ship_custom_desc' => '预计生产需 7-14 个工作日，具体取决于数量和排队情况。',
+
+    // Contact Page
+    'contact_title' => '联系我们',
+
+    // Contact Page
+    'faq_title' => '常见问题解答',
 ];

@@ -5,8 +5,9 @@ return [
     'home' => 'Home',
     'about' => 'About Us',
     'product' => 'Products',
-    'shipping' => 'Shipping Info',
-    'contact' => 'Contact / Order',
+    'contact' => 'Contact Us',
+    'order' => 'Order',
+    'faq' => 'FAQ',
 
     // Hero Section
     'welcome' => 'Premium Packaging for Your Brand',
@@ -79,4 +80,10 @@ return [
     'ship_ready_desc' => 'Shipped 1 day after payment.',
     'ship_custom_order' => 'Custom Order',
     'ship_custom_desc' => 'Estimated production 7-14 working days depending on quantity and queue.',
+
+    // Contact Page
+    'contact_title' => 'Contact Us',
+
+    // FAQ
+    'faq_title' => 'FAQ',
 ];

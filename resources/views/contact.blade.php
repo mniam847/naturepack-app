@@ -1,10 +1,10 @@
 @extends('layouts.app')
-@section('title', 'Informasi Pengiriman')
+@section('title', 'Hubungi Kami')
 
 @section('content')
 <div class="max-w-7xl mx-auto px-4 py-12 mt-10">
     <div class="bg-white p-8 rounded-lg shadow-md">
-        <h1 class="text-3xl font-bold text-orange-600 mb-6">{{ __('messages.ship_title') }}</h1>
+        <h1 class="text-3xl font-bold text-orange-600 mb-6">{{ __('messages.contact_title') }}</h1>
         
         <div class="grid md:grid-cols-2 gap-8">
             <div>

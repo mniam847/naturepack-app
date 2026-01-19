@@ -32,16 +32,20 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/admin/orders/{id}', [OrderController::class, 'update'])->name('order.update');
 });
 
-// Halaman Statis (Tentang Kami & Shipping)
+// Halaman Statis 
 // Route::view artinya kita langsung panggil file tampilan tanpa lewat Controller
 Route::view('/tentang-kami', 'about')->name('about');
-Route::view('/informasi-shipping', 'shipping')->name('shipping');
+Route::view('/hubungi-kami', 'contact')->name('contact');
+Route::view('/faq', 'faq')->name('faq');
 
 // Route untuk Halaman Tambah Produk
 Route::get('/admin/product/create', [App\Http\Controllers\ProductController::class, 'create'])->name('product.create')->middleware('auth');
 
 // Route untuk Proses Simpan (POST)
 Route::post('/admin/product', [App\Http\Controllers\ProductController::class, 'store'])->name('product.store')->middleware('auth');
+
+// Route untuk Halaman Produk (Bisa diakses publik)
+Route::get('/products', [App\Http\Controllers\ProductController::class, 'index'])->name('products.index');
 
 // Route untuk Halaman Detail Produk (Bisa diakses publik)
 Route::get('/product/{id}', [App\Http\Controllers\ProductController::class, 'show'])->name('product.show');

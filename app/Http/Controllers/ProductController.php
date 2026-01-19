@@ -52,4 +52,14 @@ class ProductController extends Controller
         // Kirim data produk ke view 'product_show'
         return view('product_show', compact('product'));
     }
+
+    // 4. Tampilkan semua product
+    public function index()
+    {
+        // Mengambil semua data dari tabel products
+        $products = Product::all();
+
+        // Mengirim data $products ke view 'products.index'
+        return view('products', compact('products'));
+    }
 }

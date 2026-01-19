@@ -19,28 +19,32 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex items-center">
-                <a href="{{ route('home') }}" class="flex items-center gap-2 text-2xl font-bold text-blue-900">
+                <a href="{{ route('home') }}" class="flex items-center gap-2 text-2xl font-bold text-[#77C377]">
                     <img src="{{ asset('images/Logo Nature Pack.jpeg') }}" alt="Logo Nature Pack" class="h-10 w-auto"> 
-                    Nature<span class="text-orange-500">Pack</span>
+                    Nature<span class="text">Pack</span>
                 </a>
             </div>
 
             <div class="hidden md:flex space-x-8 items-center">
                 
-                <a href="{{ route('home') }}" class="text-gray-600 hover:text-blue-900 font-medium">
+                <a href="{{ route('home') }}" class="{{ request()->routeIs('home') ? 'text-[#90EE90] font-bold' : 'text-gray-600 hover:text-[#90EE90] font-medium' }}">
                     {{ __('messages.home') }} 
                 </a>
 
-                <a href="{{ route('about') }}" class="text-gray-600 hover:text-blue-900 font-medium">
+                <a href="{{ route('about') }}" class="{{ request()->routeIs('about') ? 'text-[#90EE90] font-bold' : 'text-gray-600 hover:text-[#90EE90] font-medium' }}">
                     {{ __('messages.about') }}
                 </a>
 
-                <a href="{{ route('home') }}" class="text-gray-600 hover:text-blue-900 font-medium">
+                <a href="{{ route('products.index') }}" class="{{ request()->routeIs('products.*') ? 'text-[#90EE90] font-bold' : 'text-gray-600 hover:text-[#90EE90] font-medium' }}">
                     {{ __('messages.product') }}
                 </a>
 
-                <a href="{{ route('shipping') }}" class="text-gray-600 hover:text-blue-900 font-medium">
-                    {{ __('messages.shipping') }}
+                <a href="{{ route('contact') }}" class="{{ request()->routeIs('contact') ? 'text-[#90EE90] font-bold' : 'text-gray-600 hover:text-[#90EE90] font-medium' }}">
+                    {{ __('messages.contact') }}
+                </a>
+
+                <a href="{{ route('faq') }}" class="{{ request()->routeIs('faq') ? 'text-[#90EE90] font-bold' : 'text-gray-600 hover:text-[#90EE90] font-medium' }}">
+                    {{ __('messages.faq') }}
                 </a>
 
                 @auth
@@ -49,9 +53,9 @@
                     </a>
                 @endauth
 
-                <a href="{{ route('order.create') }}" class="bg-blue-900 text-white px-5 py-2 rounded-full hover:bg-orange-500 transition duration-300 shadow-md">
-                    {{ __('messages.contact') }}
-                </a>
+                {{-- <a href="{{ route('order.create') }}" class="bg-blue-900 text-white px-5 py-2 rounded-full hover:bg-orange-500 transition duration-300 shadow-md">
+                    {{ __('messages.order') }}
+                </a> --}}
 
                 <div class="flex items-center space-x-3 ml-6">
                     <a href="{{ route('lang.switch', 'id') }}" class="text-2xl hover:scale-125 transition duration-200 cursor-pointer" title="Indonesia">🇮🇩</a>

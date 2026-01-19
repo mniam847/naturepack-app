@@ -5,8 +5,9 @@ return [
     'home' => 'Beranda',
     'about' => 'Tentang Kami',
     'product' => 'Produk',
-    'shipping' => 'Info Shipping',
-    'contact' => 'Kontak / Pemesanan',
+    'contact' => 'Hubungi Kami',
+    'order' => 'Pemesanan',
+    'faq' => 'FAQ',
 
     // Hero Section (Bagian Atas)
     'welcome' => 'Kemasan Premium untuk Brand Anda',
@@ -42,7 +43,7 @@ return [
     'start_from' => 'Mulai Rp',
     'btn_order' => 'Pesan Sekarang',
     'btn_detail' => 'Detail Produk',
-    
+
     // Nama Produk (Opsional, biasanya dari Database)
     'prod_pizza' => 'Box Pizza Regular',
     'prod_baju' => 'Kardus Packing Baju',
@@ -79,4 +80,10 @@ return [
     'ship_ready_desc' => 'Dikirim H+1 setelah pembayaran.',
     'ship_custom_order' => 'Custom Order',
     'ship_custom_desc' => 'Estimasi produksi 7-14 hari kerja tergantung jumlah dan antrian.',
+
+    // Halaman Hubungi Kami
+    'contact_title' => 'Hubungi Kami',
+
+    // Halaman FAQ
+    'faq_title' => 'FAQ',
 ];
