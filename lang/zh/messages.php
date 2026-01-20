@@ -13,7 +13,7 @@ return [
     'welcome' => '为您的品牌提供优质包装',
     'hero_desc' => '根据您的喜好定制尺寸、材料和设计的包装生产。提升产品价值的最佳解决方案。',
     'btn_custom' => '开始定制订单',
-    'btn_catalog' => '查看现货目录',
+    'btn_catalog' => '查看产品库存',
 
     // Features
     'why_choose' => '为什么选择我们？',
@@ -50,6 +50,9 @@ return [
     'prod_gift' => '高级礼品硬盒',
     'prod_susu' => '牛奶盒',
 
+    // Customer
+    'customer_title' => '我们的客户',
+
     // CTA Bottom
     'cta_title' => '需要大批量特别报价吗？',
     'cta_desc' => '请联系我们的销售团队以获得最优惠的价格。',
@@ -66,8 +69,8 @@ return [
     'catalog_product' => '产品目录',
 
     // About Us Page
-    'about_title' => '关于 BoxCustom',
-    'about_desc' => 'BoxCustom 是一家成立于 2024 年值得信赖的包装解决方案提供商。我们致力于通过美观、坚固和高质量的包装，帮助中小微企业和大型企业提升产品价值。',
+    'about_title' => '关于 Nature Pack',
+    'about_desc' => 'Nature Pack 是一家成立于 2024 年值得信赖的包装解决方案提供商。我们致力于通过美观、坚固和高质量的包装，帮助中小微企业和大型企业提升产品价值。',
     'vision_title' => '我们的愿景',
     'vision_desc' => '成为印尼首屈一指的包装合作伙伴，以质量和客户满意度为重。',
 

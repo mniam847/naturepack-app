@@ -13,7 +13,7 @@ return [
     'welcome' => 'Kemasan Premium untuk Brand Anda',
     'hero_desc' => 'Produksi packaging custom dengan ukuran, bahan, dan desain sesuka Anda. Solusi tepat untuk meningkatkan nilai jual produk.',
     'btn_custom' => 'Mulai Custom Order',
-    'btn_catalog' => 'Lihat Katalog Ready',
+    'btn_catalog' => 'Lihat Produk Ready',
 
     // Features (Mengapa Memilih Kami)
     'why_choose' => 'Mengapa Memilih Kami?',
@@ -50,6 +50,9 @@ return [
     'prod_gift' => 'Hardbox Gift Premium',
     'prod_susu' => 'Box Susu',
 
+    // Customer
+    'customer_title' => 'Kustomer Kami',
+
     // CTA Bottom (Bagian Bawah)
     'cta_title' => 'Butuh Penawaran Harga Khusus untuk Partai Besar?',
     'cta_desc' => 'Hubungi tim sales kami untuk mendapatkan harga terbaik.',
@@ -66,8 +69,8 @@ return [
     'catalog_product' => 'Katalog Produk',
 
     // Halaman Tentang Kami (About Us)
-    'about_title' => 'Tentang BoxCustom',
-    'about_desc' => 'BoxCustom adalah penyedia solusi kemasan terpercaya yang berdiri sejak tahun 2024. Kami berdedikasi untuk membantu UMKM dan perusahaan besar meningkatkan nilai jual produk mereka melalui kemasan yang menarik, kokoh, dan berkualitas tinggi.',
+    'about_title' => 'Tentang Nature Pack',
+    'about_desc' => 'Nature Pack adalah penyedia solusi kemasan terpercaya yang berdiri sejak tahun 2024. Kami berdedikasi untuk membantu UMKM dan perusahaan besar meningkatkan nilai jual produk mereka melalui kemasan yang menarik, kokoh, dan berkualitas tinggi.',
     'vision_title' => 'Visi Kami',
     'vision_desc' => 'Menjadi mitra pengemasan nomor satu di Indonesia yang mengutamakan kualitas dan kepuasan pelanggan.',
 

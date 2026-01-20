@@ -13,7 +13,7 @@ return [
     'welcome' => 'Premium Packaging for Your Brand',
     'hero_desc' => 'Custom packaging production with size, material, and design as you like. The right solution to increase your product value.',
     'btn_custom' => 'Start Custom Order',
-    'btn_catalog' => 'View Ready Catalog',
+    'btn_catalog' => 'View Ready Product',
 
     // Features
     'why_choose' => 'Why Choose Us?',
@@ -50,6 +50,9 @@ return [
     'prod_gift' => 'Premium Gift Hardbox',
     'prod_susu' => 'Milk Box',
 
+    // Customer
+    'customer_title' => 'Our Customers',
+
     // CTA Bottom
     'cta_title' => 'Need Special Pricing for Bulk Orders?',
     'cta_desc' => 'Contact our sales team to get the best price.',
@@ -66,8 +69,8 @@ return [
     'catalog_product' => 'Product Catalog',
 
     // About Us Page
-    'about_title' => 'About BoxCustom',
-    'about_desc' => 'BoxCustom is a trusted packaging solution provider established in 2024. We are dedicated to helping MSMEs and large companies increase their product value through attractive, sturdy, and high-quality packaging.',
+    'about_title' => 'About Nature Pack',
+    'about_desc' => 'Nature Pack is a trusted packaging solution provider established in 2024. We are dedicated to helping MSMEs and large companies increase their product value through attractive, sturdy, and high-quality packaging.',
     'vision_title' => 'Our Vision',
     'vision_desc' => 'To be the number one packaging partner in Indonesia prioritizing quality and customer satisfaction.',
 
@@ -84,6 +87,6 @@ return [
     // Contact Page
     'contact_title' => 'Contact Us',
 
-    // FAQ
+    // FAQ Page
     'faq_title' => 'FAQ',
 ];

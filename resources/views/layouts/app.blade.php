@@ -6,12 +6,13 @@
     <title>@yield('title', 'PackagingPro - Solusi Kemasan Custom')</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
     <style>
         body { font-family: 'Inter', sans-serif; }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 flex flex-col min-h-screen">
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
     <div style="background: red; color: white; padding: 10px; text-align: center; font-weight: bold;">
         BAHASA SAAT INI: {{ app()->getLocale() }}
     </div>
@@ -57,11 +58,45 @@
                     {{ __('messages.order') }}
                 </a> --}}
 
-                <div class="flex items-center space-x-3 ml-6">
+                @php
+                    $locales = [
+                        'id' => ['flag' => '🇮🇩', 'label' => 'Indonesia'],
+                        'en' => ['flag' => '🇺🇸', 'label' => 'English'],
+                        'zh' => ['flag' => '🇨🇳', 'label' => 'Mandarin'],
+                    ];
+                    $currentLocale = app()->getLocale();
+                    $currentFlag = $locales[$currentLocale]['flag'] ?? '🇮🇩'; // Default ke Indo jika null
+                @endphp
+
+                <div class="relative group ml-6">
+                    
+                    <button class="flex items-center space-x-2 text-gray-700 hover:text-gray-900 focus:outline-none">
+                        <span class="text-2xl">{{ $currentFlag }}</span>
+                        <svg class="w-4 h-4 fill-current text-gray-500 group-hover:rotate-180 transition duration-200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                            <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+                        </svg>
+                    </button>
+
+                    <div class="absolute right-0 mt-2 w-32 bg-white rounded-md shadow-xl z-50 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all duration-200 transform origin-top-right">
+                        <div class="py-1">
+                            <a href="{{ route('lang.switch', 'id') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center">
+                                <span class="text-xl mr-2">🇮🇩</span> Indonesia
+                            </a>
+                            <a href="{{ route('lang.switch', 'en') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center">
+                                <span class="text-xl mr-2">🇺🇸</span> English
+                            </a>
+                            <a href="{{ route('lang.switch', 'zh') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center">
+                                <span class="text-xl mr-2">🇨🇳</span> 中国
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- <div class="flex items-center space-x-3 ml-6">
                     <a href="{{ route('lang.switch', 'id') }}" class="text-2xl hover:scale-125 transition duration-200 cursor-pointer" title="Indonesia">🇮🇩</a>
                     <a href="{{ route('lang.switch', 'en') }}" class="text-2xl hover:scale-125 transition duration-200 cursor-pointer" title="English">🇺🇸</a>
                     <a href="{{ route('lang.switch', 'zh') }}" class="text-2xl hover:scale-125 transition duration-200 cursor-pointer" title="Mandarin">🇨🇳</a>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>
@@ -74,7 +109,7 @@
     <footer class="bg-gray-900 text-white mt-12">
         <div class="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
-                <h3 class="text-lg font-bold mb-4">BoxCustom</h3>
+                <h3 class="text-lg font-bold mb-4">Nature Pack</h3>
                 <p class="text-gray-400 text-sm">{{ __('messages.footer_desc') }}.</p>
             </div>
             <div>
@@ -92,9 +127,36 @@
             </div>
         </div>
         <div class="bg-gray-800 py-4 text-center text-gray-500 text-xs">
-            &copy; 2026 BoxCustom Packaging. All rights reserved.
+            &copy; 2026 BoxCustom Packaging - Nature Pack. All rights reserved.
         </div>
     </footer>
+
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('countUp', (target, duration = 2000) => ({
+                current: 0,
+                target: target,
+                duration: duration,
+                start() {
+                    let startTimestamp = null;
+                    const step = (timestamp) => {
+                        if (!startTimestamp) startTimestamp = timestamp;
+                        const progress = Math.min((timestamp - startTimestamp) / this.duration, 1);
+                        // Rumus matematika sederhana untuk hitung naik
+                        this.current = Math.floor(progress * (this.target - 0) + 0);
+                        
+                        if (progress < 1) {
+                            window.requestAnimationFrame(step);
+                        }
+                    };
+                    window.requestAnimationFrame(step);
+                }
+            }))
+        })
+    </script>
+
+    <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/intersect@3.x.x/dist/cdn.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
 </body>
 </html>
