@@ -122,7 +122,7 @@
                             <a href="{{ route('order.create') }}" class="block w-full text-center border-2 border-blue-900 text-blue-900 py-2 rounded-lg font-semibold hover:bg-blue-900 hover:text-white transition">
                                 Pesan Sekarang
                             </a>
-                            <a href="{{ route('product.show', $product->id) }}" class="block w-full text-center border-2 border-blue-900 text-blue-900 py-2 rounded-lg font-semibold hover:bg-blue-900 hover:text-white transition">
+                            <a href="{{ route('products.show', $product->id) }}" class="block w-full text-center border-2 border-blue-900 text-blue-900 py-2 rounded-lg font-semibold hover:bg-blue-900 hover:text-white transition">
                                 Detail Produk
                             </a>
                         </div>

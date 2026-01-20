@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product; // Panggil Model Product
-use Illuminate\Support\Str; // <--- 1. TAMBAHKAN BARIS INI (PENTING!)
+use Illuminate\Support\Str; 
 
 class ProductController extends Controller
 {
@@ -54,12 +54,36 @@ class ProductController extends Controller
     }
 
     // 4. Tampilkan semua product
-    public function index()
+    public function index(Request $request)
     {
-        // Mengambil semua data dari tabel products
-        $products = Product::all();
+        $query = Product::query();
 
-        // Mengirim data $products ke view 'products.index'
+        // Logika Search
+        if ($request->has('search') && $request->search != '') {
+            $query->where('name', 'LIKE', '%' . $request->search . '%');
+        }
+
+        // Logika Sort
+        if ($request->has('sort')) {
+            if ($request->sort == 'price_low') {
+                $query->orderBy('price_min', 'asc');
+            } elseif ($request->sort == 'price_high') {
+                $query->orderBy('price_min', 'desc');
+            } else {
+                $query->orderBy('created_at', 'desc');
+            }
+        } else {
+            $query->orderBy('created_at', 'desc');
+        }
+
+        $products = $query->get();
+
+        // [BARU] Cek apakah ini request AJAX (Live Search)
+        if ($request->ajax()) {
+            // Hanya render bagian grid produk saja
+            return view('partials.products_grid', compact('products'))->render();
+        }
+
         return view('products', compact('products'));
     }
 }
