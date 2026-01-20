@@ -6,6 +6,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Session;
+use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,6 +52,30 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::post('/users', [OrderController::class, 'storeUser'])->name('admin.users.store');
     Route::get('/settings', [OrderController::class, 'settings'])->name('admin.settings');
     Route::put('/settings', [OrderController::class, 'updatePassword'])->name('admin.settings.update');
+});
+
+// GRUP ROUTE ADMIN (Hanya bisa diakses jika login)
+Route::prefix('admin')->middleware(['auth'])->group(function () {
+    
+    // 1. Dashboard
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    
+    // 2. Produk (Halaman List Produk Admin)
+    Route::get('/products', [AdminController::class, 'products'])->name('admin.products');
+    
+    // 3. Pesanan (Halaman List Order Admin)
+    Route::get('/orders', [AdminController::class, 'orders'])->name('admin.orders');
+    // Route untuk update status order (tetap pakai OrderController atau pindah ke AdminController boleh)
+    // Asumsi di OrderController sudah ada update:
+    Route::patch('/orders/{id}', [App\Http\Controllers\OrderController::class, 'update'])->name('orders.update');
+
+    // 4. Kelola Admin
+    Route::get('/users', [AdminController::class, 'users'])->name('admin.users');
+    Route::post('/users', [AdminController::class, 'storeUser'])->name('admin.users.store');
+
+    // 5. Ganti Password
+    Route::get('/settings', [AdminController::class, 'settings'])->name('admin.settings');
+    Route::put('/settings/password', [AdminController::class, 'updatePassword'])->name('admin.password.update');
 });
 
 // Lang Switch

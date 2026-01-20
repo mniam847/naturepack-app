@@ -12,9 +12,9 @@ class Order extends Model
     // Daftar kolom yang boleh diisi secara massal (melalui formulir)
     protected $fillable = [
         'product_id',
-        'name',
+        'ccustomer_name',
         'email',       // <--- PENTING: Sudah ditambahkan
-        'whatsapp',
+        'customer_whatsapp',
         'quantity',
         'length',      // Dimensi custom
         'width',

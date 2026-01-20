@@ -2,41 +2,43 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use App\Models\Product;
-use App\Models\Order; // [PENTING] Kita pakai Model Order
-use Illuminate\Support\Facades\Hash;
+use App\Models\Order; // Pastikan Model Order sudah di-import
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB; 
 
 class OrderController extends Controller
 {
-    // 1. Tampilkan Halaman Form
+    /**
+     * 1. HALAMAN FORM ORDER (PUBLIC)
+     * Menampilkan formulir pemesanan kepada pembeli.
+     */
     public function create(Request $request) 
     {
-        // Ambil produk (pastikan kolom status ada di tabel products, jika tidak error hapus where-nya)
+        // Ambil semua data produk untuk dropdown
         $products = Product::all(); 
     
-        // Ambil ID produk dari URL (jika user klik order dari katalog)
+        // Ambil ID produk dari URL jika user mengklik "Pesan" dari katalog
         $selectedProduct = $request->query('product_id');
 
-        // Pastikan view ini sesuai folder Anda (resources/views/order/create.blade.php)
         return view('order.create', compact('products', 'selectedProduct'));
     }
 
-    // 2. Proses Simpan Data (PERBAIKAN UTAMA DISINI)
+    /**
+     * 2. PROSES SIMPAN ORDER (PUBLIC)
+     * Menerima data dari form dan menyimpannya ke database.
+     */
     public function store(Request $request)
     {
-        // Validasi input
-        // Nama field harus sama persis dengan 'name="..."' di file create.blade.php
-        $validated = $request->validate([
-            'product_id' => 'required|exists:products,id', // Wajib pilih produk
-            'name'       => 'required|string|max:255',     // Sesuaikan dengan DB (name)
-            'email'      => 'required|email|max:255',      // Wajib ada email
-            'whatsapp'   => 'required|string|max:20',      // Sesuaikan dengan DB (whatsapp)
-            'quantity'   => 'required|integer|min:100',
+        // A. VALIDASI
+        // Nama di sini harus sesuai dengan name="..." di file create.blade.php
+        $request->validate([
+            'product_id'  => 'required|exists:products,id',
+            'name'        => 'required|string|max:255', // Di form namanya 'name'
+            'email'       => 'required|email|max:255',
+            'whatsapp'    => 'required|string|max:20',  // Di form namanya 'whatsapp'
+            'quantity'    => 'required|integer|min:100',
             
-            // Opsional
+            // Opsional (Boleh kosong)
             'length'      => 'nullable|numeric',
             'width'       => 'nullable|numeric',
             'height'      => 'nullable|numeric',
@@ -45,37 +47,44 @@ class OrderController extends Controller
             'design_file' => 'nullable|image|mimes:jpeg,png,jpg,pdf|max:2048', 
         ]);
 
-        // Proses Upload File (Hanya jika ada file)
+        // B. UPLOAD FILE (Jika ada)
+        $fileName = null;
         if ($request->hasFile('design_file')) {
             $file = $request->file('design_file');
             $fileName = time() . '_' . $file->getClientOriginalName();
             $file->move(public_path('uploads/designs'), $fileName);
-            
-            // Masukkan nama file ke array data yang akan disimpan
-            $validated['design_file'] = $fileName;
         }
 
-        // Set status default
-        $validated['status'] = 'pending';
+        // C. SIMPAN KE DATABASE (MAPPING KOLOM)
+        // Kita petakan input form ke nama kolom database yang berbeda
+        Order::create([
+            'product_id'        => $request->product_id,
+            
+            // [PENTING] Mapping: Input 'name' -> Kolom DB 'customer_name'
+            'customer_name'     => $request->name, 
+            
+            // [PENTING] Mapping: Input 'whatsapp' -> Kolom DB 'customer_whatsapp'
+            'customer_whatsapp' => $request->whatsapp, 
+            
+            'email'             => $request->email,
+            'quantity'          => $request->quantity,
+            'length'            => $request->length,
+            'width'             => $request->width,
+            'height'            => $request->height,
+            'material'          => $request->material,
+            'notes'             => $request->notes,
+            'design_file'       => $fileName,
+            'status'            => 'pending', // Default status
+        ]);
 
-        // SIMPAN MENGGUNAKAN MODEL (Lebih Aman & Otomatis)
-        // Ini otomatis mengisi created_at & updated_at
-        Order::create($validated);
-
-        // Redirect balik ke katalog dengan pesan sukses
-        return redirect()->route('products.index')->with('success', 'Pesanan berhasil dikirim! Cek Email/WhatsApp Anda untuk info selanjutnya.');
+        // D. REDIRECT
+        return redirect()->route('products.index')->with('success', 'Pesanan berhasil dikirim! Silakan cek WhatsApp/Email Anda.');
     }
 
-    // FUNGSI ADMIN: Daftar Pesanan
-    public function index()
-    {
-        // Menggunakan Eloquent 'with' untuk mengambil data produk terkait (Join otomatis)
-        $orders = Order::with('product')->latest()->get();
-        
-        return view('admin.orders', compact('orders'));
-    }
-
-    // FUNGSI ADMIN: Update Status
+    /**
+     * 3. UPDATE STATUS ORDER (ADMIN)
+     * Digunakan oleh Admin untuk mengubah status pesanan.
+     */
     public function update(Request $request, $id)
     {
         $order = Order::findOrFail($id);
@@ -87,52 +96,7 @@ class OrderController extends Controller
         return redirect()->back()->with('success', 'Status pesanan berhasil diperbarui!');
     }
 
-    // --- MANAJEMEN USER (ADMIN) ---
-
-    public function users()
-    {
-        $users = User::all(); 
-        return view('admin.users', compact('users'));
-    }
-
-    public function storeUser(Request $request)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8', 
-        ]);
-
-        User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password), 
-            'role' => 'admin', 
-        ]);
-
-        return redirect()->back()->with('success', 'Akun Admin baru berhasil ditambahkan!');
-    }
-
-    public function settings()
-    {
-        return view('admin.settings');
-    }
-
-    public function updatePassword(Request $request)
-    {
-        $request->validate([
-            'current_password' => 'required',
-            'new_password' => 'required|min:8|confirmed', 
-        ]);
-
-        if (!Hash::check($request->current_password, auth()->user()->password)) {
-            return back()->withErrors(['current_password' => 'Password lama Anda salah!']);
-        }
-
-        User::whereId(auth()->user()->id)->update([
-            'password' => Hash::make($request->new_password)
-        ]);
-
-        return back()->with('success', 'Password berhasil diperbarui!');
-    }
+    // CATATAN:
+    // Fungsi index() (List Order), users(), settings(), dll SUDAH DIPINDAHKAN
+    // ke AdminController.php agar struktur kode lebih rapi.
 }

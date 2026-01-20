@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('orders', function (Blueprint $table) {
-            // Menambahkan kolom email setelah kolom name
-            $table->string('email')->after('name')->nullable(); 
+            // Taruh email setelah customer_name (sesuai nama kolom asli anda)
+            $table->string('email')->nullable()->after('customer_name'); 
         });
     }
 

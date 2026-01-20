@@ -25,8 +25,9 @@ class AuthController extends Controller
         // Cek apakah email & password cocok dengan database
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            // Jika sukses, lempar ke halaman Admin Order
-            return redirect()->route('admin.orders');
+
+            // UBAH JADI INI:
+            return redirect()->intended('/admin/dashboard');
         }
 
         // Jika gagal, kembalikan ke form login dengan pesan error
