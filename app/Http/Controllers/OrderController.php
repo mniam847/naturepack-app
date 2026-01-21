@@ -30,38 +30,45 @@ class OrderController extends Controller
     // Di dalam Controller (misal OrderController.php atau FrontController.php)
     public function store(Request $request)
     {
-        // Validasi
+        // 1. Validasi Input
         $request->validate([
-            'product_id' => 'required',
-            'name'       => 'required', // Input form: name
-            'whatsapp'   => 'required', // Input form: whatsapp
-            'quantity'   => 'required|integer',
-            // ... validasi lain
+            'customer_name'     => 'required|string|max:255',
+            'customer_whatsapp' => 'required|string|max:20',
+            'length'            => 'required|numeric',
+            'width'             => 'required|numeric',
+            'height'            => 'required|numeric',
+            'material'          => 'required|string',
+            'quantity'          => 'required|integer',
+            // Validasi file: harus gambar/pdf, max 5MB
+            'design_file'       => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:5120', 
+            'notes'             => 'nullable|string',
         ]);
 
-        // Simpan ke Database sesuai struktur gambar
-        Order::create([
-            'product_id'        => $request->product_id,
-            
-            // MAPPING PENTING:
-            'customer_name'     => $request->name,      // Input 'name' masuk ke 'customer_name'
-            'customer_whatsapp' => $request->whatsapp,  // Input 'whatsapp' masuk ke 'customer_whatsapp'
-            
-            'email'             => $request->email,
-            'quantity'          => $request->quantity,
-            'length'            => $request->length ?? 0, // Kasih default 0 jika kosong
-            'width'             => $request->width ?? 0,
-            'height'            => $request->height ?? 0,
-            
-            // MENCEGAH ERROR MATERIAL:
-            // Jika di form ada input material, pakai itu. Jika tidak, isi strip '-'
-            'material'          => $request->material ?? 'Standard', 
-            
-            'notes'             => $request->notes,
-            'status'            => 'Menunggu Konfirmasi', // Sesuai default value di gambar
-        ]);
+        // 2. Siapkan Data
+        $data = $request->all();
+        
+        // Set status default
+        $data['status'] = 'Menunggu Konfirmasi';
 
-        return redirect()->back()->with('success', 'Pesanan berhasil dibuat!');
+        // 3. LOGIKA UPLOAD FILE DESAIN
+        if ($request->hasFile('design_file')) {
+            $file = $request->file('design_file');
+            
+            // Buat nama file unik: time_namafileasli.jpg
+            $filename = time() . '_' . str_replace(' ', '_', $file->getClientOriginalName());
+            
+            // Simpan ke folder public/uploads/designs
+            $file->move(public_path('uploads/designs'), $filename);
+            
+            // Simpan nama file ke array data untuk masuk database
+            $data['design_file'] = $filename;
+        }
+
+        // 4. Simpan ke Database
+        Order::create($data);
+
+        // 5. Redirect dengan pesan sukses
+        return redirect()->back()->with('success', 'Pesanan berhasil dikirim! Admin akan segera menghubungi via WhatsApp.');
     }
 
     /**

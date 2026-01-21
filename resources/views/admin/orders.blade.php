@@ -22,12 +22,13 @@
         <table class="w-full text-left border-collapse whitespace-nowrap">
             <thead>
                 <tr class="bg-gray-50 text-gray-600 text-sm uppercase tracking-wider border-b-2 border-gray-200">
-                    <th class="px-4 py-3 border-r w-16 text-center">No</th> {{-- GANTI JADI NO --}}
+                    <th class="px-4 py-3 border-r w-16 text-center">No</th>
                     <th class="px-4 py-3 border-r">Tanggal</th>
                     <th class="px-4 py-3 border-r">Pelanggan</th>
                     <th class="px-4 py-3 border-r">Produk & Qty</th>
-                    <th class="px-4 py-3 border-r">Spesifikasi</th>
-                    <th class="px-4 py-3 border-r">Catatan</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Spesifikasi</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">File Desain</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Catatan</th>
                     <th class="px-4 py-3 border-r">Status</th>
                     <th class="px-4 py-3">Aksi</th>
                 </tr>
@@ -37,12 +38,12 @@
                 <tr class="hover:bg-gray-50 transition">
                     
                     {{-- 1. NOMOR URUT --}}
-                    <td class="px-4 py-3 border-r text-center font-bold text-gray-700">
+                    <td class="px-4 py-3 border-r text-center font-bold text-gray-700 align-top">
                         {{ $loop->iteration }}
                     </td>
 
                     {{-- 2. TANGGAL --}}
-                    <td class="px-4 py-3 border-r text-gray-600">
+                    <td class="px-4 py-3 border-r text-gray-600 align-top">
                         {{ $order->created_at->format('d M Y') }}<br>
                         <span class="text-xs text-gray-400">{{ $order->created_at->format('H:i') }} WIB</span>
                     </td>
@@ -86,8 +87,23 @@
                         </div>
                     </td>
 
-                    {{-- 6. CATATAN --}}
-                    <td class="px-4 py-3 border-r align-top whitespace-normal min-w-[150px]">
+                    {{-- 6. FILE DESAIN --}}
+                    <td class="px-4 py-3 whitespace-nowrap align-top border-r">
+                        @if($order->design_file)
+                            <a href="{{ asset('uploads/designs/' . $order->design_file) }}" target="_blank" class="inline-flex items-center px-3 py-1.5 bg-indigo-100 text-indigo-700 rounded-lg text-xs font-bold hover:bg-indigo-200 transition">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                                Lihat File
+                            </a>
+                            <div class="text-[10px] text-gray-400 mt-1 truncate max-w-[100px]" title="{{ $order->design_file }}">
+                                {{ $order->design_file }}
+                            </div>
+                        @else
+                            <span class="text-gray-400 text-sm italic">Tidak ada file</span>
+                        @endif
+                    </td>
+
+                    {{-- 7. CATATAN --}}
+                    <td class="px-4 py-3 border-r align-top whitespace-normal min-w-[200px]">
                         @if($order->notes)
                             <div class="bg-yellow-50 p-2 rounded border border-yellow-200 text-gray-600 text-xs italic">
                                 "{{ $order->notes }}"
@@ -97,7 +113,7 @@
                         @endif
                     </td>
 
-                    {{-- 7. STATUS --}}
+                    {{-- 8. STATUS (BADGE) --}}
                     <td class="px-4 py-3 border-r align-top">
                         @php
                             $color = match($order->status) {
@@ -113,7 +129,7 @@
                         </span>
                     </td>
 
-                    {{-- 8. UPDATE STATUS --}}
+                    {{-- 9. UPDATE STATUS (DROPDOWN) --}}
                     <td class="px-4 py-3 align-top">
                         <form action="{{ route('order.update', $order->id) }}" method="POST">
                             @csrf
@@ -130,7 +146,7 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="8" class="px-4 py-8 text-center text-gray-500">
+                    <td colspan="9" class="px-4 py-8 text-center text-gray-500">
                         Belum ada pesanan masuk.
                     </td>
                 </tr>

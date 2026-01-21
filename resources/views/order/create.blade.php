@@ -4,6 +4,27 @@
 
 @section('content')
 <div class="max-w-3xl mx-auto px-4 py-12">
+    {{-- 1. ALERT SUKSES (Jika berhasil) --}}
+    @if(session('success'))
+        <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-6" role="alert">
+            <p class="font-bold">Berhasil!</p>
+            <p>{{ session('success') }}</p>
+        </div>
+    @endif
+
+    {{-- 2. ALERT ERROR (Jika gagal validasi / file terlalu besar) --}}
+    @if ($errors->any())
+        <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-6" role="alert">
+            <p class="font-bold">Gagal Mengirim Pesanan!</p>
+            <p>Silakan periksa kembali inputan Anda:</p>
+            <ul class="list-disc list-inside mt-2 text-sm">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-200">
         <h1 class="text-2xl font-bold text-blue-900 mb-6 text-center">Form Pemesanan</h1>
 
@@ -13,7 +34,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Nama Lengkap (Full Name)</label>
-                    <input type="text" name="name" required class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 focus:outline-none" placeholder="Ex: John Doe">
+                    <input type="text" name="customer_name" required class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 focus:outline-none" placeholder="Ex: John Doe">
                 </div>
                 
                 <div>
@@ -23,7 +44,7 @@
 
                 <div class="md:col-span-2">
                     <label class="block text-sm font-medium text-gray-700 mb-2">WhatsApp / Phone Number (with Country Code)</label>
-                    <input type="text" name="whatsapp" required class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 focus:outline-none" placeholder="Ex: +61 412 345 678 (Australia) / +86 138 0013 (China)">
+                    <input type="text" name="customer_whatsapp" required class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 focus:outline-none" placeholder="Ex: +61 412 345 678 (Australia) / +86 138 0013 (China)">
                     <p class="text-xs text-gray-500 mt-1">Please include country code (e.g., +61 for Australia, +86 for China).</p>
                 </div>
             </div>
@@ -78,6 +99,11 @@
                         <input type="number" name="quantity" required min="1" value="100" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm border p-2">
                     </div>
                 </div>
+            </div>
+
+            <div class="mb-6">
+                <label for="notes" class="block mb-2 text-sm font-bold text-gray-700">Catatan Tambahan (Opsional)</label>
+                <textarea name="notes" id="notes" rows="3" class="w-full border border-gray-300 rounded-lg p-2.5 focus:ring-green-500 focus:border-green-500" placeholder="Contoh: Tolong dikirim sebelum tanggal 25, atau request warna tali..."></textarea>
             </div>
 
             <div class="mb-8">

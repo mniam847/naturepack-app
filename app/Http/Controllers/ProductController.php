@@ -18,31 +18,39 @@ class ProductController extends Controller
     // 2. Proses Simpan ke Database
     public function store(Request $request)
     {
-        // Validasi data (wajib diisi)
+        // 1. Validasi
         $request->validate([
-            'name' => 'required',
-            'category' => 'required',
-            'price_min' => 'required|numeric',
-            'image' => 'required|image|mimes:jpeg,png,jpg|max:2048', // Maks 2MB
+            'name'      => 'required|string|max:255',
+            'category'  => 'required|string',
+            'price_min' => 'nullable|numeric',
+            'stock'     => 'nullable|integer',
+            'image'     => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        // A. Proses Upload Gambar Otomatis
-        $imageName = time() . '.' . $request->image->extension(); // Bikin nama unik
-        $request->image->move(public_path('images'), $imageName); // Pindahkan ke folder public/images
+        // 2. Siapkan Data
+        $data = $request->all();
+        
+        // Generate Slug otomatis dari Nama (Contoh: "Box Besar" -> "box-besar")
+        $data['slug'] = Str::slug($request->name);
 
-        // B. Simpan ke Database
-        Product::create([
-            'name' => $request->name,
-            'slug' => Str::slug($request->name), // <--- 2. TAMBAHKAN BARIS INI
-            'category' => $request->category,
-            'price_min' => $request->price_min,
-            'description' => $request->description ?? 'Deskripsi standar',
-            'image' => 'images/' . $imageName, // Simpan alamatnya saja
-        ]);
+        // Set status default berdasarkan stok
+        $data['is_ready_stock'] = ($request->stock > 0) ? 1 : 0;
+        $data['status'] = ($request->stock > 0) ? 'ready' : 'empty';
 
-        // C. Balik ke halaman admin
-        return redirect()->route('admin.orders')->with('success', 'Produk Berhasil Ditambahkan!');
-    }
+        // 3. Upload Gambar (Jika ada)
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('uploads/products'), $filename);
+            $data['image'] = $filename;
+        }
+
+        // 4. Simpan ke Database
+        Product::create($data);
+
+        // Ganti 'product.index' menjadi 'admin.products'
+        return redirect()->route('admin.products')->with('success', 'Produk berhasil ditambahkan!');
+        }
 
     // 3. Tampilkan Detail Produk
     public function show($id)
