@@ -123,11 +123,11 @@
             <div>
                 <h3 class="text-lg font-bold mb-4">{{ __('messages.contact_header') }}</h3>
                 <p class="text-gray-400 text-sm">WhatsApp: +62 812-3456-7890</p>
-                <p class="text-gray-400 text-sm">Email: sales@boxcustom.com</p>
+                <p class="text-gray-400 text-sm">Email: sales@naturepack.com</p>
             </div>
         </div>
-        <div class="bg-[#355E3B] py-4 text-center text-gray-300 text-xs">
-            &copy; 2026 BoxCustom Packaging - Nature Pack. All rights reserved.
+        <div class="bg-gray-900 py-4 text-center text-gray-300 text-xs">
+            &copy; 2026 Nature Pack. All rights reserved.
         </div>
     </footer>
 

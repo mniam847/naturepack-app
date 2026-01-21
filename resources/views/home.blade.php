@@ -77,29 +77,6 @@
     </button>
 </div>
 
-{{-- <section class="bg-blue-900 text-white py-20 lg:py-32 relative overflow-hidden">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-        <h1 class="text-4xl md:text-6xl font-bold text-white mb-4 tracking-tight">
-            {{ __('messages.welcome') }}
-        </h1>
-
-        <p class="text-lg md:text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-            {{ __('messages.hero_desc') }}
-        </p>
-
-        <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="#" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-4 px-8 rounded-full transition duration-300 shadow-lg transform hover:-translate-y-1">
-                {{ __('messages.btn_custom') }}
-            </a>
-            <a href="#" class="bg-transparent border-2 border-white text-white hover:bg-white hover:text-blue-900 font-bold py-4 px-8 rounded-full transition duration-300">
-                {{ __('messages.btn_catalog') }}
-            </a>
-        </div>
-    </div>
-    <div class="absolute top-0 right-0 -mt-20 -mr-20 w-80 h-80 bg-blue-800 rounded-full opacity-50 blur-3xl"></div>
-    <div class="absolute bottom-0 left-0 -mb-20 -ml-20 w-80 h-80 bg-orange-600 rounded-full opacity-20 blur-3xl"></div>
-</section> --}}
-
 <section class="py-20 bg-grey-500 overflow-hidden">
     <div class="container mx-auto px-6 lg:px-12">
         
@@ -196,9 +173,6 @@
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-center">
             <div class="bg-white rounded-lg shadow-sm p-4 h-32 flex items-center justify-center hover:shadow-md transition">
                 <img src="{{ asset('images/customer/BTR.jpg') }}" alt="Logo Nature Pack" class="max-h-10 w-auto object-contain">
-                {{-- <div class="text-4xl font-bold text-white mb-2">01</div>
-                <h4 class="font-bold text-lg">{{ __('messages.step_1') }}</h4>
-                <p class="text-sm text-gray-600">{{ __('messages.step_1_desc') }}.</p> --}}
             </div>
             <div class="bg-white rounded-lg shadow-sm p-4 h-32 flex items-center justify-center hover:shadow-md transition">
                 <img src="{{ asset('images/customer/Hiron.jpg') }}" alt="Logo Nature Pack" class="max-h-10 w-auto object-contain">
@@ -225,8 +199,42 @@
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                @foreach($featured_products as $product)
-                <div class="group border rounded-lg overflow-hidden hover:shadow-lg transition bg-white flex flex-col h-full">
+                @foreach($featured_products->take(3) as $product)
+
+                <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 group flex flex-col h-full">
+    
+                    <div class="relative overflow-hidden h-64 bg-gray-50 flex items-center justify-center p-4">
+                        <img 
+                            src="{{ $product->image ? asset('uploads/products/' . $product->image) : 'https://via.placeholder.com/400x300?text=No+Image' }}" 
+                            alt="{{ $product->name }}" 
+                            class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
+                        >
+                        @if($product->is_ready_stock)
+                            <span class="absolute top-4 right-4 bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">READY STOCK</span>
+                        @endif
+                    </div>
+                
+                    <div class="p-6 flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2 group-hover:text-green-600 transition-colors">{{ $product->name }}</h3>
+                            <p class="text-gray-500 text-sm mb-4 line-clamp-2">{{ $product->description ?? 'Deskripsi belum tersedia.' }}</p>
+                        </div>
+                        
+                        <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between">
+                            <div>
+                                <p class="text-xs text-gray-500">Mulai dari</p>
+                                <p class="text-lg font-bold text-green-600">Rp {{ number_format($product->price_min, 0, ',', '.') }}</p>
+                            </div>
+                        </div>
+                
+                        <div class="mt-6 grid grid-cols-2 gap-3">
+                            <a href="{{ route('products.show', $product->id) }}" class="flex justify-center items-center px-4 py-2 border-2 border-green-500 text-green-600 font-semibold rounded-lg hover:bg-green-50 transition text-sm">Lihat Detail</a>
+                            <a href="{{ route('order.create', ['product_id' => $product->id]) }}" class="flex justify-center items-center px-4 py-2 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition text-sm shadow-md">Pesan</a>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- <div class="group border rounded-lg overflow-hidden hover:shadow-lg transition bg-white flex flex-col h-full">
                     
                     <div class="w-full bg-gray-100 relative">
                         <img 
@@ -253,7 +261,7 @@
                             </a>
                         </div>
                     </div>
-                </div>
+                </div> --}}
                 @endforeach
             </div>
 
@@ -296,6 +304,12 @@
     <div class="max-w-7xl mx-auto px-4 text-center">
         <h2 class="text-white text-2xl md:text-3xl font-bold mb-4">{{ __('messages.cta_title') }}</h2>
         <p class="text-white opacity-90 mb-8">{{ __('messages.cta_desc') }}.</p>
+        <a href="https://wa.me/628123456789" class="bg-white text-[#228B22] px-8 py-3 rounded-full font-bold shadow-lg hover:bg-gray-100 transition inline-flex items-center gap-2">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+            </svg>
+            Kirim Email
+        </a>
         <a href="https://wa.me/628123456789" class="bg-white text-[#228B22] px-8 py-3 rounded-full font-bold shadow-lg hover:bg-gray-100 transition inline-flex items-center gap-2">
             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
             {{ __('messages.btn_wa') }}
