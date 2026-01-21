@@ -7,7 +7,7 @@
     <div class="bg-white p-8 rounded-lg shadow-md border border-gray-100">
         
         <div class="mb-8 border-b pb-4">
-            <h1 class="text-3xl font-bold text-blue-900 mb-2">
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">
                 {{ __('messages.faq_title') ?? 'Frequently Asked Questions' }}
             </h1>
             <p class="text-gray-600">

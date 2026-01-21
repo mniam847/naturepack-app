@@ -106,7 +106,7 @@
         @yield('content')
     </main>
 
-    <footer class="bg-gray-900 text-white mt-12">
+    <footer class="bg-[#013220] text-white mt-12">
         <div class="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
                 <h3 class="text-lg font-bold mb-4">Nature Pack</h3>
@@ -126,7 +126,7 @@
                 <p class="text-gray-400 text-sm">Email: sales@boxcustom.com</p>
             </div>
         </div>
-        <div class="bg-gray-800 py-4 text-center text-gray-500 text-xs">
+        <div class="bg-[#355E3B] py-4 text-center text-gray-300 text-xs">
             &copy; 2026 BoxCustom Packaging - Nature Pack. All rights reserved.
         </div>
     </footer>

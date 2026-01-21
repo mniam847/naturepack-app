@@ -13,7 +13,7 @@
 
         <section class="py-16 lg:py-24 bg-white">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                <span class="block mb-4 text-sm font-bold tracking-widest uppercase text-indigo-600">
+                <span class="block mb-4 text-sm font-bold tracking-widest uppercase text-[#228B22]">
                     Tentang Perusahaan Kami
                 </span>
                 
