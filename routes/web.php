@@ -7,7 +7,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\AdminController;
-
+use App\Http\Controllers\FaqController; 
+use App\Models\Faq;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -81,6 +82,20 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::get('/settings', [AdminController::class, 'settings'])->name('admin.settings');
     Route::put('/settings/password', [AdminController::class, 'updatePassword'])->name('admin.password.update');
 });
+    
+
+    // Route FAQ
+    Route::get('/admin/faqs', [FaqController::class, 'index'])->name('admin.faqs');
+    Route::get('/admin/faqs/create', [FaqController::class, 'create'])->name('faqs.create');
+    Route::post('/admin/faqs', [FaqController::class, 'store'])->name('faqs.store');
+    Route::get('/admin/faqs/{id}/edit', [FaqController::class, 'edit'])->name('faqs.edit');
+    Route::put('/admin/faqs/{id}', [FaqController::class, 'update'])->name('faqs.update');
+    Route::delete('/admin/faqs/{id}', [FaqController::class, 'destroy'])->name('faqs.destroy');
+
+    Route::get('/faq', function () {
+    $faqs = Faq::all(); // Ambil data
+    return view('faq', compact('faqs')); // Kirim data
+    })->name('faq');
 
 // Lang Switch
 Route::get('/lang/{locale}', function ($locale) {

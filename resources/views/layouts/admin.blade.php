@@ -17,7 +17,7 @@
 
     <aside class="w-64 bg-slate-900 text-white flex flex-col fixed h-full transition-all duration-300 z-20">
         <div class="h-16 flex items-center justify-center border-b border-slate-800">
-            <h1 class="text-2xl font-bold text-green-500">Box<span class="text-white">Custom</span></h1>
+            <img src="{{ asset('images/Logo Nature Pack.jpeg') }}" alt="Logo Nature Pack" class="h-10 w-auto"> 
         </div>
 
         <nav class="flex-1 overflow-y-auto py-4">
@@ -40,7 +40,12 @@
                         <span class="font-medium">Pesanan</span>
                     </a>
                 </li>
-                
+                <li>
+                    <a href="{{ route('admin.faqs') }}" class="flex items-center px-4 py-3 {{ request()->routeIs('admin.faqs*') ? 'bg-slate-800 border-l-4 border-blue-500' : 'hover:bg-slate-800' }} transition-colors">
+                        <i class="fas fa-question-circle w-6 text-center"></i>
+                        <span class="ml-2 font-medium">FAQ / Bantuan</span>
+                    </a>
+                </li>
                 <div class="my-4 border-t border-slate-800 mx-4"></div>
                 
                 <li>
@@ -55,6 +60,7 @@
                         <span class="font-medium">Ganti Password</span>
                     </a>
                 </li>
+                
             </ul>
         </nav>
 
