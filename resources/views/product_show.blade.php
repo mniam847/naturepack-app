@@ -13,7 +13,7 @@
         <div class="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col md:flex-row">
             
             <div class="w-full md:w-1/2 bg-gray-100">
-                <img src="{{ asset($product->image) }}" alt="{{ $product->name }}" class="w-full h-96 md:h-full object-cover object-center">
+                <img src="{{ asset('uploads/products/' . $product->image) }}" alt="{{ $product->name }}" class="w-full h-96 md:h-full object-cover object-center">
             </div>
 
             <div class="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center">

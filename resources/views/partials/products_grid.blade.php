@@ -1,11 +1,11 @@
 @forelse($products as $product)
 <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 group flex flex-col h-full">
     
-    <div class="relative overflow-hidden h-64 bg-gray-100">
+    <div class="relative overflow-hidden h-64 bg-gray-50 flex items-center justify-center p-4">
         <img 
-            src="{{ $product->image ? asset($product->image) : 'https://via.placeholder.com/400x300?text=No+Image' }}" 
+            src="{{ $product->image ? asset('uploads/products/' . $product->image) : 'https://via.placeholder.com/400x300?text=No+Image' }}" 
             alt="{{ $product->name }}" 
-            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
         >
         @if($product->is_ready_stock)
             <span class="absolute top-4 right-4 bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">READY STOCK</span>

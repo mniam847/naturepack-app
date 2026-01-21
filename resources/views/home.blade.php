@@ -230,7 +230,7 @@
                     
                     <div class="w-full bg-gray-100 relative">
                         <img 
-                            src="{{ asset($product->image) }}" 
+                            src="{{ asset('uploads/products/' . $product->image) }}" 
                             alt="{{ $product->name }}" 
                             class="w-full transition duration-300 group-hover:scale-105"
                             style="height: 250px; width: 100%; object-fit: cover; object-position: center;"

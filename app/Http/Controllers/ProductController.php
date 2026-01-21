@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product; // Panggil Model Product
 use Illuminate\Support\Str; 
+use Illuminate\Support\Facades\File;
 
 class ProductController extends Controller
 {
@@ -85,5 +86,69 @@ class ProductController extends Controller
         }
 
         return view('products', compact('products'));
+    }
+
+    // 5. FORM EDIT (INI YANG BELUM ADA DI SCREENSHOT)
+    public function edit($id)
+    {
+        $product = Product::findOrFail($id);
+        // Kita akan buat file ini di langkah ke-2
+        return view('admin.product_edit', compact('product'));
+    }
+
+    // 6. PROSES UPDATE
+    public function update(Request $request, $id)
+    {
+        $product = Product::findOrFail($id);
+
+        // 1. VALIDASI KITA LONGGARKAN
+        $request->validate([
+            'name' => 'required',
+            'price_min' => 'required|numeric',
+            'description' => 'nullable',
+            // Kita ubah jadi 'nullable' saja dulu agar file APAPUN bisa masuk.
+            // Nanti kalau sudah sukses, baru kita pikirkan validasi ketatnya.
+            'image' => 'nullable' 
+        ]);
+
+        $input = $request->all();
+
+        // 2. PROSES UPLOAD
+        if ($request->hasFile('image')) {
+            // Hapus gambar lama jika ada
+            if ($product->image && File::exists(public_path('uploads/products/' . $product->image))) {
+                File::delete(public_path('uploads/products/' . $product->image));
+            }
+            
+            $file = $request->file('image');
+            
+            // Kita bersihkan nama file agar tidak ada spasi aneh
+            $cleanName = str_replace(' ', '_', $file->getClientOriginalName());
+            $fileName = time() . '_' . $cleanName;
+            
+            // Pindahkan file
+            $file->move(public_path('uploads/products'), $fileName);
+            $input['image'] = $fileName;
+        } else {
+            // PENTING: Jika user tidak upload gambar baru, jangan update kolom image
+            // Agar gambar lama tidak hilang/jadi null
+            unset($input['image']);
+        }
+
+        // 3. UPDATE DATABASE
+        $product->update($input);
+
+        return redirect()->route('admin.products')->with('success', 'Produk berhasil diperbarui.');
+    }
+
+    // 7. HAPUS
+    public function destroy($id)
+    {
+        $product = Product::findOrFail($id);
+        if ($product->image && File::exists(public_path('uploads/products/' . $product->image))) {
+            File::delete(public_path('uploads/products/' . $product->image));
+        }
+        $product->delete();
+        return redirect()->route('admin.products')->with('success', 'Produk dihapus.');
     }
 }

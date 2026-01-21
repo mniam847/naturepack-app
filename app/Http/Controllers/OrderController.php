@@ -27,58 +27,41 @@ class OrderController extends Controller
      * 2. PROSES SIMPAN ORDER (PUBLIC)
      * Menerima data dari form dan menyimpannya ke database.
      */
+    // Di dalam Controller (misal OrderController.php atau FrontController.php)
     public function store(Request $request)
     {
-        // A. VALIDASI
-        // Nama di sini harus sesuai dengan name="..." di file create.blade.php
+        // Validasi
         $request->validate([
-            'product_id'  => 'required|exists:products,id',
-            'name'        => 'required|string|max:255', // Di form namanya 'name'
-            'email'       => 'required|email|max:255',
-            'whatsapp'    => 'required|string|max:20',  // Di form namanya 'whatsapp'
-            'quantity'    => 'required|integer|min:100',
-            
-            // Opsional (Boleh kosong)
-            'length'      => 'nullable|numeric',
-            'width'       => 'nullable|numeric',
-            'height'      => 'nullable|numeric',
-            'material'    => 'nullable|string',
-            'notes'       => 'nullable|string',
-            'design_file' => 'nullable|image|mimes:jpeg,png,jpg,pdf|max:2048', 
+            'product_id' => 'required',
+            'name'       => 'required', // Input form: name
+            'whatsapp'   => 'required', // Input form: whatsapp
+            'quantity'   => 'required|integer',
+            // ... validasi lain
         ]);
 
-        // B. UPLOAD FILE (Jika ada)
-        $fileName = null;
-        if ($request->hasFile('design_file')) {
-            $file = $request->file('design_file');
-            $fileName = time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('uploads/designs'), $fileName);
-        }
-
-        // C. SIMPAN KE DATABASE (MAPPING KOLOM)
-        // Kita petakan input form ke nama kolom database yang berbeda
+        // Simpan ke Database sesuai struktur gambar
         Order::create([
             'product_id'        => $request->product_id,
             
-            // [PENTING] Mapping: Input 'name' -> Kolom DB 'customer_name'
-            'customer_name'     => $request->name, 
-            
-            // [PENTING] Mapping: Input 'whatsapp' -> Kolom DB 'customer_whatsapp'
-            'customer_whatsapp' => $request->whatsapp, 
+            // MAPPING PENTING:
+            'customer_name'     => $request->name,      // Input 'name' masuk ke 'customer_name'
+            'customer_whatsapp' => $request->whatsapp,  // Input 'whatsapp' masuk ke 'customer_whatsapp'
             
             'email'             => $request->email,
             'quantity'          => $request->quantity,
-            'length'            => $request->length,
-            'width'             => $request->width,
-            'height'            => $request->height,
-            'material'          => $request->material,
+            'length'            => $request->length ?? 0, // Kasih default 0 jika kosong
+            'width'             => $request->width ?? 0,
+            'height'            => $request->height ?? 0,
+            
+            // MENCEGAH ERROR MATERIAL:
+            // Jika di form ada input material, pakai itu. Jika tidak, isi strip '-'
+            'material'          => $request->material ?? 'Standard', 
+            
             'notes'             => $request->notes,
-            'design_file'       => $fileName,
-            'status'            => 'pending', // Default status
+            'status'            => 'Menunggu Konfirmasi', // Sesuai default value di gambar
         ]);
 
-        // D. REDIRECT
-        return redirect()->route('products.index')->with('success', 'Pesanan berhasil dikirim! Silakan cek WhatsApp/Email Anda.');
+        return redirect()->back()->with('success', 'Pesanan berhasil dibuat!');
     }
 
     /**

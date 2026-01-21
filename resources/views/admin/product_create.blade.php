@@ -1,54 +1,44 @@
-@extends('layouts.app')
-@section('title', 'Tambah Produk Baru')
+@extends('layouts.admin')
+
+@section('title', 'Tambah Produk')
+@section('header_title', 'Tambah Produk Baru')
 
 @section('content')
-<div class="max-w-4xl mx-auto px-4 py-12 mt-20">
-    <div class="bg-white p-8 rounded-lg shadow-lg">
-        <h2 class="text-2xl font-bold text-gray-800 mb-6">Tambah Produk Baru</h2>
+<div class="max-w-2xl bg-white rounded-xl shadow-lg border border-gray-100 p-8">
+    
+    <form action="{{ route('product.store') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        
+        <div class="mb-5">
+            <label class="block text-gray-700 font-semibold mb-2">Nama Produk</label>
+            <input type="text" name="name" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" placeholder="Contoh: Box Makanan Large" required>
+        </div>
 
-        @if ($errors->any())
-            <div class="alert alert-danger" style="color: red; border: 1px solid red; padding: 10px;">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
+        <div class="grid grid-cols-2 gap-4 mb-5">
+            <div>
+                <label class="block text-gray-700 font-semibold mb-2">Harga (Rp)</label>
+                <input type="number" name="price" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" placeholder="15000" required>
             </div>
-        @endif
-
-        <form action="{{ route('product.store') }}" method="POST" enctype="multipart/form-data">
-            @csrf
-
-            <div class="mb-4">
-                <label class="block text-gray-700 font-bold mb-2">Nama Produk</label>
-                <input type="text" name="name" class="w-full border p-2 rounded" required placeholder="Contoh: Box Pizza Premium">
+            <div>
+                <label class="block text-gray-700 font-semibold mb-2">Stok Awal</label>
+                <input type="number" name="stock" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" placeholder="100" required>
             </div>
+        </div>
 
-            <div class="mb-4">
-                <label class="block text-gray-700 font-bold mb-2">Kategori (Label)</label>
-                <input type="text" name="category" class="w-full border p-2 rounded" required placeholder="Contoh: Food Grade / Shipping">
-            </div>
+        <div class="mb-5">
+            <label class="block text-gray-700 font-semibold mb-2">Deskripsi Produk</label>
+            <textarea name="description" rows="3" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" placeholder="Deskripsi singkat..."></textarea>
+        </div>
 
-            <div class="mb-4">
-                <label class="block text-gray-700 font-bold mb-2">Harga Mulai (Rp)</label>
-                <input type="number" name="price_min" class="w-full border p-2 rounded" required placeholder="1500">
-            </div>
+        <div class="mb-6">
+            <label class="block text-gray-700 font-semibold mb-2">Gambar Produk</label>
+            <input type="file" name="image" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100 transition"/>
+        </div>
 
-            <div class="mb-4">
-                <label class="block text-gray-700 font-bold mb-2">Deskripsi Singkat</label>
-                <textarea name="description" class="w-full border p-2 rounded" rows="3"></textarea>
-            </div>
-
-            <div class="mb-6">
-                <label class="block text-gray-700 font-bold mb-2">Foto Produk</label>
-                <input type="file" name="image" class="w-full border p-2 rounded" required>
-                <p class="text-sm text-gray-500 mt-1">*Format: JPG/PNG, Maks 2MB</p>
-            </div>
-
-            <button type="submit" class="bg-blue-900 text-white px-6 py-2 rounded font-bold hover:bg-blue-800 transition">
-                + Simpan Produk
-            </button>
-        </form>
-    </div>
+        <div class="flex gap-3">
+            <button type="submit" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg shadow transition">Simpan Produk</button>
+            <a href="{{ route('admin.products') }}" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-6 rounded-lg transition">Batal</a>
+        </div>
+    </form>
 </div>
 @endsection

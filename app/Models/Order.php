@@ -9,21 +9,22 @@ class Order extends Model
 {
     use HasFactory;
 
-    // Daftar kolom yang boleh diisi secara massal (melalui formulir)
     protected $fillable = [
         'product_id',
-        'ccustomer_name',
-        'email',       // <--- PENTING: Sudah ditambahkan
-        'customer_whatsapp',
-        'quantity',
-        'length',      // Dimensi custom
-        'width',
-        'height',
-        'notes',
-        'status',      // pending, processed, completed
+        'customer_name',      // Wajib (No Null)
+        'email',              // Boleh Null
+        'customer_whatsapp',  // Wajib (No Null)
+        'length',             // Wajib (No Null)
+        'width',              // Wajib (No Null)
+        'height',             // Wajib (No Null)
+        'notes',              // Boleh Null
+        'material',           // WAJIB (No Null)
+        'quantity',           // Wajib (No Null)
+        'design_file',        // Boleh Null
+        'status',             // Ada default, tapi boleh diisi
     ];
 
-    // Relasi: Setiap Order "milik" satu Product
+    // Relasi ke Produk
     public function product()
     {
         return $this->belongsTo(Product::class);

@@ -62,12 +62,16 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     
     // 2. Produk (Halaman List Produk Admin)
     Route::get('/products', [AdminController::class, 'products'])->name('admin.products');
+    Route::get('/products/{id}/edit', [ProductController::class, 'edit'])->name('products.edit');
+    Route::put('/products/{id}', [ProductController::class, 'update'])->name('products.update');
+    Route::delete('/products/{id}', [ProductController::class, 'destroy'])->name('products.destroy');
     
     // 3. Pesanan (Halaman List Order Admin)
     Route::get('/orders', [AdminController::class, 'orders'])->name('admin.orders');
     // Route untuk update status order (tetap pakai OrderController atau pindah ke AdminController boleh)
     // Asumsi di OrderController sudah ada update:
     Route::patch('/orders/{id}', [App\Http\Controllers\OrderController::class, 'update'])->name('orders.update');
+    Route::get('/admin/orders/export', [AdminController::class, 'exportOrders'])->name('orders.export');
 
     // 4. Kelola Admin
     Route::get('/users', [AdminController::class, 'users'])->name('admin.users');
