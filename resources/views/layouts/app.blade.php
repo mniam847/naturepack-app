@@ -126,9 +126,10 @@
                 <p class="text-gray-400 text-sm">Email: sales@naturepack.com</p>
             </div>
         </div>
-        <div class="bg-gray-900 py-4 text-center text-gray-300 text-xs">
+        <div class="bg-emerald-950 py-4 text-center text-gray-300 text-xs">
             &copy; 2026 Nature Pack. All rights reserved.
         </div>
+
     </footer>
 
     <script>

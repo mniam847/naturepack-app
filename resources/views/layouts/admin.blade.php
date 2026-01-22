@@ -15,7 +15,7 @@
 
 <div class="flex h-screen overflow-hidden">
 
-    <aside class="w-64 bg-slate-900 text-white flex flex-col fixed h-full transition-all duration-300 z-20">
+    <aside class="w-64 bg-emerald-950 text-white flex flex-col fixed h-full transition-all duration-300 z-20">
         <div class="h-16 flex items-center justify-center border-b border-slate-800">
             <img src="{{ asset('images/Logo Nature Pack.jpeg') }}" alt="Logo Nature Pack" class="h-10 w-auto"> 
         </div>

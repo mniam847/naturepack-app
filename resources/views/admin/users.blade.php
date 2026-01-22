@@ -36,7 +36,7 @@
                 <label class="block text-gray-700 text-sm font-bold mb-2">Password</label>
                 <input type="password" name="password" class="w-full border rounded p-2" placeholder="Minimal 8 karakter" required>
             </div>
-            <button type="submit" class="w-full bg-blue-900 text-white font-bold py-2 rounded hover:bg-blue-800">
+            <button type="submit" class="w-full bg-emerald-900 text-white font-bold py-2 rounded hover:bg-emerald-700">
                 Simpan Admin Baru
             </button>
         </form>

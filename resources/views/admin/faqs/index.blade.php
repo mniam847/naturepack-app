@@ -7,7 +7,7 @@
 <div class="bg-white rounded-xl shadow-lg p-6">
     <div class="flex justify-between mb-6">
         <h3 class="text-lg font-bold text-gray-800">Daftar Pertanyaan & Jawaban</h3>
-        <a href="{{ route('faqs.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition">
+        <a href="{{ route('faqs.create') }}" class="bg-emerald-500 hover:bg-emerald-950 text-white px-4 py-2 rounded-lg text-sm font-medium transition">
             <i class="fas fa-plus mr-1"></i> Tambah FAQ
         </a>
     </div>

@@ -25,7 +25,7 @@
             <input type="password" name="new_password_confirmation" class="w-full border rounded p-2" required>
         </div>
 
-        <button type="submit" class="w-full bg-orange-600 text-white font-bold py-2 rounded hover:bg-orange-700">
+        <button type="submit" class="w-full bg-emerald-600 text-white font-bold py-2 rounded hover:bg-emerald-700">
             Update Password
         </button>
     </form>
