@@ -40,6 +40,18 @@
                         <span class="font-medium">Pesanan</span>
                     </a>
                 </li>
+
+                <li>
+                <a href="{{ route('admin.rates.index') }}" 
+                class="flex items-center gap-3 px-4 py-3 transition-colors duration-200 
+                {{ request()->routeIs('admin.rates.*') ? 'bg-green-50 text-green-700 border-r-4 border-green-600' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }}">
+                    
+                    {{-- Ikon Uang/Kurs --}}
+                    <i class="fas fa-money-bill-wave w-5 text-center"></i>
+                    
+                    <span class="font-medium">Pengaturan Kurs</span>
+                </a>
+                </li>
                 <li>
                     <a href="{{ route('admin.faqs') }}" class="flex items-center px-4 py-3 {{ request()->routeIs('admin.faqs*') ? 'bg-slate-800 border-l-4 border-blue-500' : 'hover:bg-slate-800' }} transition-colors">
                         <i class="fas fa-question-circle w-6 text-center"></i>

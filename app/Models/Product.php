@@ -15,9 +15,13 @@ class Product extends Model
         'category',
         'description',
         'image',
-        'price_min',      // KITA PAKAI INI SAJA
-        'is_ready_stock', // Sesuai database Anda (tinyint)
-        'status',         // Opsional (jika masih dipakai untuk filter)
+        'price_min',      
+        'is_ready_stock', 
+        'status',         
         'sold_count',
+        'name_en',
+        'description_en',
+        'name_zh',
+        'description_zh',
     ];
 }

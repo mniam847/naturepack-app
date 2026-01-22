@@ -19,12 +19,21 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         // 1. Validasi
-        $request->validate([
-            'name'      => 'required|string|max:255',
-            'category'  => 'required|string',
-            'price_min' => 'nullable|numeric',
-            'stock'     => 'nullable|integer',
-            'image'     => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+       $data = $request->validate([
+            'name'           => 'required|string|max:255',
+            'category'       => 'required',
+            'price_min'      => 'required|numeric', // Harga
+            
+            // HAPUS 'stock' => 'required|integer',
+            // GANTI DENGAN INI:
+            'is_ready_stock' => 'required|in:0,1', // Hanya terima 0 atau 1
+            
+            'description'    => 'nullable',
+            'image'          => 'nullable|image|max:2048',
+            
+            // Bahasa Tambahan
+            'name_en' => 'nullable', 'name_zh' => 'nullable',
+            'description_en' => 'nullable', 'description_zh' => 'nullable',
         ]);
 
         // 2. Siapkan Data
@@ -110,13 +119,21 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
 
         // 1. VALIDASI KITA LONGGARKAN
-        $request->validate([
-            'name' => 'required',
-            'price_min' => 'required|numeric',
-            'description' => 'nullable',
-            // Kita ubah jadi 'nullable' saja dulu agar file APAPUN bisa masuk.
-            // Nanti kalau sudah sukses, baru kita pikirkan validasi ketatnya.
-            'image' => 'nullable' 
+        $data = $request->validate([
+            'name'           => 'required|string|max:255',
+            'category'       => 'required',
+            'price_min'      => 'required|numeric', // Harga
+            
+            // HAPUS 'stock' => 'required|integer',
+            // GANTI DENGAN INI:
+            'is_ready_stock' => 'required|in:0,1', // Hanya terima 0 atau 1
+            
+            'description'    => 'nullable',
+            'image'          => 'nullable|image|max:2048',
+            
+            // Bahasa Tambahan
+            'name_en' => 'nullable', 'name_zh' => 'nullable',
+            'description_en' => 'nullable', 'description_zh' => 'nullable',
         ]);
 
         $input = $request->all();

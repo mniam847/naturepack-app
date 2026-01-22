@@ -92,6 +92,9 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::put('/admin/faqs/{id}', [FaqController::class, 'update'])->name('faqs.update');
     Route::delete('/admin/faqs/{id}', [FaqController::class, 'destroy'])->name('faqs.destroy');
 
+    Route::get('/admin/settings/rates', [App\Http\Controllers\Admin\ExchangeRateController::class, 'index'])->name('admin.rates.index');
+    Route::put('/admin/settings/rates', [App\Http\Controllers\Admin\ExchangeRateController::class, 'update'])->name('admin.rates.update');
+
     Route::get('/faq', function () {
     $faqs = Faq::all(); // Ambil data
     return view('faq', compact('faqs')); // Kirim data

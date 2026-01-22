@@ -3,23 +3,52 @@
 @section('title', 'Katalog Produk')
 
 @section('content')
+
+{{-- 1. AMBIL LOCALE --}}
+@php
+    $locale = session('locale', 'id');
+@endphp
+
 <div class="bg-gray-50 min-h-screen py-12">
     <div class="container mx-auto px-4">
         
         <div class="text-center mb-12">
-            <h1 class="text-4xl font-bold text-gray-800 mb-4">Katalog Kemasan Custom</h1>
+            <h1 class="text-4xl font-bold text-gray-800 mb-4">
+                {{-- TERJEMAHAN JUDUL --}}
+                @if($locale == 'en')
+                    Custom Packaging Catalog
+                @elseif($locale == 'zh')
+                    定制包装目录
+                @else
+                    Katalog Kemasan Custom
+                @endif
+            </h1>
             <p class="text-gray-600 max-w-2xl mx-auto">
-                Pilih kemasan yang cocok untuk produk Anda.
+                {{-- TERJEMAHAN DESKRIPSI --}}
+                @if($locale == 'en')
+                    Choose the perfect packaging for your product.
+                @elseif($locale == 'zh')
+                    为您的产品选择完美的包装。
+                @else
+                    Pilih kemasan yang cocok untuk produk Anda.
+                @endif
             </p>
         </div>
 
         <div class="bg-white p-4 rounded-lg shadow-sm mb-8 flex flex-col md:flex-row justify-between items-center">
             
             <div class="w-full md:w-1/3 mb-4 md:mb-0 relative">
+                {{-- TERJEMAHAN PLACEHOLDER SEARCH --}}
+                @php
+                    $placeholderText = 'Ketik untuk mencari...';
+                    if($locale == 'en') $placeholderText = 'Type to search...';
+                    elseif($locale == 'zh') $placeholderText = '输入搜索...';
+                @endphp
+
                 <input 
                     type="text" 
                     id="search-input" 
-                    placeholder="Ketik untuk mencari..." 
+                    placeholder="{{ $placeholderText }}" 
                     class="w-full border border-gray-300 rounded-lg pl-10 pr-4 py-2 focus:ring-2 focus:ring-green-500 focus:outline-none"
                 >
                 <div id="loading-icon" class="absolute left-3 top-3 hidden">
@@ -31,16 +60,27 @@
             </div>
 
             <div class="flex items-center gap-2">
-                <span class="text-gray-600 text-sm">Urutkan:</span>
+                <span class="text-gray-600 text-sm">
+                    @if($locale == 'en') Sort by: @elseif($locale == 'zh') 排序方式: @else Urutkan: @endif
+                </span>
                 <select id="sort-select" class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none cursor-pointer">
-                    <option value="latest">Terbaru</option>
-                    <option value="price_low">Harga Terendah</option>
-                    <option value="price_high">Harga Tertinggi</option>
+                    {{-- TERJEMAHAN OPSI DROPDOWN --}}
+                    <option value="latest">
+                        @if($locale == 'en') Latest @elseif($locale == 'zh') 最新 @else Terbaru @endif
+                    </option>
+                    <option value="price_low">
+                        @if($locale == 'en') Lowest Price @elseif($locale == 'zh') 最低价格 @else Harga Terendah @endif
+                    </option>
+                    <option value="price_high">
+                        @if($locale == 'en') Highest Price @elseif($locale == 'zh') 最高价格 @else Harga Tertinggi @endif
+                    </option>
                 </select>
             </div>
         </div>
 
+        {{-- CONTAINER PRODUK --}}
         <div id="product-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {{-- Bagian ini memanggil file lain (partial) --}}
             @include('partials.products_grid')
         </div>
 
@@ -50,14 +90,12 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
-        let timeout = null; // Variabel untuk delay
+        let timeout = null; 
 
-        // Fungsi utama pencarian
         function fetchProducts() {
             let search = $('#search-input').val();
             let sort = $('#sort-select').val();
 
-            // Tampilkan loading, sembunyikan ikon search
             $('#loading-icon').removeClass('hidden');
             $('#search-icon').addClass('hidden');
 
@@ -66,22 +104,19 @@
                 method: "GET",
                 data: { search: search, sort: sort },
                 success: function(response) {
-                    // Ganti isi container dengan HTML baru dari controller
                     $('#product-container').html(response);
-                    
-                    // Sembunyikan loading
                     $('#loading-icon').addClass('hidden');
                     $('#search-icon').removeClass('hidden');
                 },
                 error: function() {
-                    alert('Terjadi kesalahan koneksi.');
+                    // Alert error bisa diterjemahkan juga jika mau, tapi standar Inggris oke
+                    alert('Connection error / Terjadi kesalahan koneksi.');
                     $('#loading-icon').addClass('hidden');
                     $('#search-icon').removeClass('hidden');
                 }
             });
         }
 
-        // Event saat mengetik (pakai delay 500ms agar tidak spam server)
         $('#search-input').on('keyup', function() {
             clearTimeout(timeout);
             timeout = setTimeout(function() {
@@ -89,7 +124,6 @@
             }, 500); 
         });
 
-        // Event saat ganti sorting (Langsung eksekusi)
         $('#sort-select').on('change', function() {
             fetchProducts();
         });
