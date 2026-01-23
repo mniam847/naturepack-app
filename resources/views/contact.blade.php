@@ -2,6 +2,12 @@
 @section('title', 'Hubungi Kami')
 
 @section('content')
+
+{{-- 1. AMBIL BAHASA DARI SESSION --}}
+@php
+    $locale = session('locale', 'id');
+@endphp
+
 <div class="max-w-7xl mx-auto px-4 py-12 ">
     <div class="bg-white p-8 rounded-lg shadow-md">
         {{-- <h1 class="text-3xl font-bold text-orange-600 mb-6">{{ __('messages.contact_title') }}</h1> --}}
@@ -25,8 +31,16 @@
                 <div>
                     <h2 class="text-4xl font-bold text-gray-900 mb-4">{{ __('messages.contact_title') }}</h2>
                     <p class="text-gray-600 leading-relaxed">
+                        @if($locale == 'en')
+                        Want to ask about products, orders, or anything else?
+                        You can come in person during operating hours, contact us by phone, or simply fill out the form here.
+                        @elseif($locale == 'zh')
+                        想咨询产品、订单或其他任何问题？
+                        您可以亲自到店办理（营业时间），也可以打电话联系我们，或者直接填写这里的表格。
+                        @else
                         Ingin menanyakan tentang produk, pemesanan, atau hal lainnya? 
                         Anda dapat datang langsung saat jam operasional, menghubungi kami melalui telepon, atau cukup mengisi formulir di sini.
+                        @endif
                     </p>
                 </div>
 
@@ -40,7 +54,15 @@
                             </svg>
                         </div>
                         <div>
-                            <h4 class="text-lg font-semibold text-gray-900">Address</h4>
+                            <h4 class="text-lg font-semibold text-gray-900">
+                                @if($locale == 'en')
+                                Address
+                                @elseif($locale == 'zh')
+                                地址
+                                @else
+                                Alamat
+                                @endif
+                            </h4>
                             <p class="text-gray-600 mt-1">
                                 Jl. Parang Garuda No. 8, Desa/Kelurahan Wonorejo, Kecamatan Kaliwungu, Kabupaten Kendal, Jawa Tengah, Indonesia
                             </p>
@@ -54,7 +76,15 @@
                             </svg>
                         </div>
                         <div>
-                            <h4 class="text-lg font-semibold text-gray-900">Phone</h4>
+                            <h4 class="text-lg font-semibold text-gray-900">
+                                @if($locale == 'en')
+                                Phone
+                                @elseif($locale == 'zh')
+                                电话
+                                @else
+                                Telepon
+                                @endif
+                            </h4>
                             <p class="text-gray-600 mt-1">+62 812-3456-7895</p>
                             <p class="text-gray-600">+62 812-3456-7895</p>
                         </div>
@@ -67,7 +97,15 @@
                             </svg>
                         </div>
                         <div>
-                            <h4 class="text-lg font-semibold text-gray-900">Email</h4>
+                            <h4 class="text-lg font-semibold text-gray-900">
+                                @if($locale == 'en')
+                                Email
+                                @elseif($locale == 'zh')
+                                电子邮件
+                                @else
+                                Email
+                                @endif
+                            </h4>
                             <p class="text-gray-600 mt-1">naturepack@gmail.com</p>
                             <p class="text-gray-600">tes@gmail.com</p>
                         </div>
@@ -77,35 +115,81 @@
             </div>
 
             <div class="bg-white p-8 lg:p-10 rounded-2xl shadow-lg border border-gray-100">
-                <h3 class="text-2xl font-bold text-gray-900 mb-6">Send Us a Message</h3>
+                <h3 class="text-2xl font-bold text-gray-900 mb-6">
+                    @if($locale == 'en')
+                    Send Us a Message
+                    @elseif($locale == 'zh')
+                    给我们留言
+                    @else
+                    Kirimkan Pesan kepada Kami
+                    @endif
+                </h3>
                 
                 <form action="#" method="POST" class="space-y-5">
                     @csrf <div>
-                        <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Full name</label>
+                        <label for="name" class="block text-sm font-medium text-gray-700 mb-1">
+                            @if($locale == 'en')
+                            Full Name
+                            @elseif($locale == 'zh')
+                            姓名
+                            @else
+                            Nama Lengkap
+                            @endif
+                        </label>
                         <input type="text" name="name" id="name" placeholder="John Doe" 
                             class="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition duration-200 outline-none">
                     </div>
 
                     <div>
-                        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email address</label>
+                        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">
+                            @if($locale == 'en')
+                            Email address
+                            @elseif($locale == 'zh')
+                            电子邮件
+                            @else
+                            Alamat Email
+                            @endif
+                        </label>
                         <input type="email" name="email" id="email" placeholder="john@example.com" 
                             class="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition duration-200 outline-none">
                     </div>
 
                     <div>
-                        <label for="subject" class="block text-sm font-medium text-gray-700 mb-1">Subject</label>
+                        <label for="subject" class="block text-sm font-medium text-gray-700 mb-1">
+                            @if($locale == 'en')
+                            Subject
+                            @elseif($locale == 'zh')
+                            主题
+                            @else
+                            Subjek
+                            @endif
+                        </label>
                         <input type="text" name="subject" id="subject" placeholder="Registration Info" 
                             class="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition duration-200 outline-none">
                     </div>
 
                     <div>
-                        <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Your message</label>
+                        <label for="message" class="block text-sm font-medium text-gray-700 mb-1">
+                            @if($locale == 'en')
+                            Your message
+                            @elseif($locale == 'zh')
+                            您的留言
+                            @else
+                            Pesan Anda
+                            @endif
+                        </label>
                         <textarea name="message" id="message" rows="4" placeholder="Write your message here..." 
                             class="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition duration-200 outline-none resize-none"></textarea>
                     </div>
 
                     <button type="submit" class="w-full bg-[#77C377] hover:bg-[#228B22] text-white font-bold py-3 rounded-lg transition duration-300 shadow-md transform hover:-translate-y-1">
+                        @if($locale == 'en')
                         Submit Message
+                        @elseif($locale == 'zh')
+                        发送消息
+                        @else
+                        Kirim Pesan
+                        @endif
                     </button>
                 </form>
             </div>
@@ -137,7 +221,13 @@
                            target="_blank" 
                            class="inline-flex items-center text-[#77C377] hover:text-[#228B22] font-medium transition duration-200">
                             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                            @if($locale == 'en')
+                            Open in Google Maps
+                            @elseif($locale == 'zh')
+                            在谷歌地图中打开
+                            @else
                             Buka di Google Maps
+                            @endif
                         </a>
                     </div>
                 </div>

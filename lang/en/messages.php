@@ -52,11 +52,16 @@ return [
 
     // Customer
     'customer_title' => 'Our Customers',
+    'client' => 'Clients',
+    'employee' => 'Employees',
+    'area' => 'Useable Area',
+    'production' => 'Production Lines',
 
     // CTA Bottom
     'cta_title' => 'Need Special Pricing for Bulk Orders?',
     'cta_desc' => 'Contact our sales team to get the best price.',
     'btn_wa' => 'Chat WhatsApp',
+    'btn_email' => 'Send Email',
 
     // Footer
     'footer_desc' => 'The best partner for your business packaging needs. Serving small to large quantities.',
@@ -70,7 +75,8 @@ return [
 
     // About Us Page
     'about_title' => 'About Nature Pack',
-    'about_desc' => 'Nature Pack is a trusted packaging solution provider established in 2024. We are dedicated to helping MSMEs and large companies increase their product value through attractive, sturdy, and high-quality packaging.',
+    'about_desc' => 'PT. Naturepack Essentials Indonesia was established in May 2024, boasting a modern factory spanning 36,000 square meters. As a leading provider of paper packaging solutions,  we have over two decades of production experience in China.',
+    'about_more' => 'More',
     'vision_title' => 'Our Vision',
     'vision_desc' => 'To be the number one packaging partner in Indonesia prioritizing quality and customer satisfaction.',
 

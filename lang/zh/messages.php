@@ -52,11 +52,16 @@ return [
 
     // Customer
     'customer_title' => '我们的客户',
+    'client' => '客户',
+    'employee' => '员工',
+    'area' => '可用面积',
+    'production' => '生产线',
 
     // CTA Bottom
     'cta_title' => '需要大批量特别报价吗？',
     'cta_desc' => '请联系我们的销售团队以获得最优惠的价格。',
     'btn_wa' => 'WhatsApp 聊天',
+    'btn_email' => '发送电子邮件',
 
     // Footer
     'footer_desc' => '满足您商业包装需求的最佳合作伙伴。服务范围涵盖小批量到大批量。',
@@ -71,6 +76,7 @@ return [
     // About Us Page
     'about_title' => '关于 Nature Pack',
     'about_desc' => 'Nature Pack 是一家成立于 2024 年值得信赖的包装解决方案提供商。我们致力于通过美观、坚固和高质量的包装，帮助中小微企业和大型企业提升产品价值。',
+    'about_more' => '更多的',
     'vision_title' => '我们的愿景',
     'vision_desc' => '成为印尼首屈一指的包装合作伙伴，以质量和客户满意度为重。',
 

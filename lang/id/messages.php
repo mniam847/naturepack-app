@@ -52,11 +52,16 @@ return [
 
     // Customer
     'customer_title' => 'Kustomer Kami',
+    'client' => 'Klien',
+    'employee' => 'Karyawan',
+    'area' => 'Luas Area Terpakai',
+    'production' => 'Jalur Produksi',
 
     // CTA Bottom (Bagian Bawah)
     'cta_title' => 'Butuh Penawaran Harga Khusus untuk Partai Besar?',
     'cta_desc' => 'Hubungi tim sales kami untuk mendapatkan harga terbaik.',
     'btn_wa' => 'Chat WhatsApp',
+    'btn_email' => 'Kirim Email',
 
     // Footer
     'footer_desc' => 'Partner terbaik untuk kebutuhan packaging bisnis Anda. Melayani partai kecil hingga besar.',
@@ -68,9 +73,13 @@ return [
     'start_from' => 'Mulai Rp',
     'catalog_product' => 'Katalog Produk',
 
+    // Halaman Home
+    // 'about' => 'Tentang',
+
     // Halaman Tentang Kami (About Us)
     'about_title' => 'Tentang Nature Pack',
-    'about_desc' => 'Nature Pack adalah penyedia solusi kemasan terpercaya yang berdiri sejak tahun 2024. Kami berdedikasi untuk membantu UMKM dan perusahaan besar meningkatkan nilai jual produk mereka melalui kemasan yang menarik, kokoh, dan berkualitas tinggi.',
+    'about_desc' => 'PT. Naturepack Essentials Indonesia didirikan pada Mei 2024, dengan pabrik modern seluas 36.000 meter persegi. Sebagai penyedia solusi kemasan kertas terkemuka, kami memiliki pengalaman produksi lebih dari dua dekade di Tiongkok.',
+    'about_more' => 'Lebih',
     'vision_title' => 'Visi Kami',
     'vision_desc' => 'Menjadi mitra pengemasan nomor satu di Indonesia yang mengutamakan kualitas dan kepuasan pelanggan.',
 
