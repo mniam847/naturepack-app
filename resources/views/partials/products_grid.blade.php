@@ -49,7 +49,8 @@
                         @if($locale == 'en') Starting from @elseif($locale == 'zh') 起价 @else Mulai dari @endif
                     </p>
                     <p class="text-green-600 font-bold">
-                        {{ formatCurrency($product->price_min) }}
+                        {{-- {{ formatCurrency($product->price_min) }} --}}
+                        {{ Illuminate\Support\Number::currency($product->price_min, 'IDR', 'id') }}
                     </p>
                 </div>
             </div>

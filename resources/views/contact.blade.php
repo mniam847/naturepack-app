@@ -85,8 +85,8 @@
                                 Telepon
                                 @endif
                             </h4>
-                            <p class="text-gray-600 mt-1">+62 812-3456-7895</p>
-                            <p class="text-gray-600">+62 812-3456-7895</p>
+                            <p class="text-gray-600 mt-1">+62 821-8888-8955</p>
+                            {{-- <p class="text-gray-600">+62 812-3456-7895</p> --}}
                         </div>
                     </div>
 
@@ -106,8 +106,8 @@
                                 Email
                                 @endif
                             </h4>
-                            <p class="text-gray-600 mt-1">naturepack@gmail.com</p>
-                            <p class="text-gray-600">tes@gmail.com</p>
+                            <p class="text-gray-600 mt-1">info@naturepackessentials.com</p>
+                            {{-- <p class="text-gray-600">tes@gmail.com</p> --}}
                         </div>
                     </div>
 
