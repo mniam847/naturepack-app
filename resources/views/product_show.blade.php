@@ -1,4 +1,3 @@
-{{-- 1. LOGIKA PHP DI ATAS LAYOUT --}}
 @php
     $locale = session('locale', 'id');
 
@@ -17,8 +16,6 @@
 
 @extends('layouts.app')
 
-{{-- Gunakan variabel $displayName agar judul tab browser ikut berubah --}}
-@section('title', $displayName)
 
 @section('content')
 <div class="py-12 bg-gray-50 min-h-screen mt-16">

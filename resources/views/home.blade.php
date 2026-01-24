@@ -199,69 +199,102 @@
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                {{-- LOOOPING PRODUK --}}
                 @foreach($featured_products->take(3) as $product)
+                
+                @php
+                    // 1. Ambil Bahasa Aktif
+                    $locale = app()->getLocale(); 
+                    
+                    // 2. Logika Nama Produk
+                    $productName = $product->name; // Default ID
+                    if($locale == 'en' && !empty($product->name_en)) {
+                        $productName = $product->name_en;
+                    } elseif($locale == 'zh' && !empty($product->name_zh)) {
+                        $productName = $product->name_zh;
+                    }
+
+                    // 3. Logika Deskripsi Produk
+                    $productDesc = $product->description; // Default ID
+                    if($locale == 'en' && !empty($product->description_en)) {
+                        $productDesc = $product->description_en;
+                    } elseif($locale == 'zh' && !empty($product->description_zh)) {
+                        $productDesc = $product->description_zh;
+                    }
+                @endphp
 
                 <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 group flex flex-col h-full">
     
+                    {{-- GAMBAR PRODUK --}}
                     <div class="relative overflow-hidden h-64 bg-gray-50 flex items-center justify-center p-4">
                         <img 
                             src="{{ $product->image ? asset('uploads/products/' . $product->image) : 'https://via.placeholder.com/400x300?text=No+Image' }}" 
-                            alt="{{ $product->name }}" 
+                            alt="{{ $productName }}" 
                             class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
                         >
+                        
+                        {{-- BADGE READY STOCK (Disesuaikan Bahasanya) --}}
                         @if($product->is_ready_stock)
-                            <span class="absolute top-4 right-4 bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">READY STOCK</span>
+                            <span class="absolute top-4 right-4 bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
+                                @if($locale == 'en') READY STOCK 
+                                @elseif($locale == 'zh') 现货 
+                                @else READY STOCK 
+                                @endif
+                            </span>
                         @endif
                     </div>
                 
                     <div class="p-6 flex-grow flex flex-col justify-between">
                         <div>
-                            <h3 class="text-xl font-bold text-gray-800 mb-2 group-hover:text-green-600 transition-colors">{{ $product->name }}</h3>
-                            <p class="text-gray-500 text-sm mb-4 line-clamp-2">{{ $product->description ?? 'Deskripsi belum tersedia.' }}</p>
+                            {{-- NAMA PRODUK --}}
+                            <h3 class="text-xl font-bold text-gray-800 mb-2 group-hover:text-green-600 transition-colors">
+                                {{ $productName }}
+                            </h3>
+                            
+                            {{-- DESKRIPSI --}}
+                            <p class="text-gray-500 text-sm mb-4 line-clamp-2">
+                                {{ $productDesc ?? ($locale == 'en' ? 'No description available.' : ($locale == 'zh' ? '暂无描述。' : 'Deskripsi belum tersedia.')) }}
+                            </p>
                         </div>
                         
                         <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between">
                             <div>
-                                <p class="text-xs text-gray-500">Mulai dari</p>
-                                <p class="text-lg font-bold text-green-600">Rp {{ number_format($product->price_min, 0, ',', '.') }}</p>
+                                {{-- TEKS "MULAI DARI" --}}
+                                <p class="text-xs text-gray-500">
+                                    @if($locale == 'en') Starting from 
+                                    @elseif($locale == 'zh') 起价 
+                                    @else Mulai dari 
+                                    @endif
+                                </p>
+                                
+                                {{-- HARGA (MATA UANG OTOMATIS) --}}
+                                <p class="text-lg font-bold text-green-600">
+                                    {{ formatCurrency($product->price_min) }}
+                                </p>
                             </div>
                         </div>
                 
                         <div class="mt-6 grid grid-cols-2 gap-3">
-                            <a href="{{ route('products.show', $product->id) }}" class="flex justify-center items-center px-4 py-2 border-2 border-green-500 text-green-600 font-semibold rounded-lg hover:bg-green-50 transition text-sm">Lihat Detail</a>
-                            <a href="{{ route('order.create', ['product_id' => $product->id]) }}" class="flex justify-center items-center px-4 py-2 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition text-sm shadow-md">Pesan</a>
+                            {{-- TOMBOL LIHAT DETAIL --}}
+                            <a href="{{ route('products.show', $product->id) }}" class="flex justify-center items-center px-4 py-2 border-2 border-green-500 text-green-600 font-semibold rounded-lg hover:bg-green-50 transition text-sm">
+                                @if($locale == 'en') View Detail 
+                                @elseif($locale == 'zh') 查看详情 
+                                @else Lihat Detail 
+                                @endif
+                            </a>
+                            
+                            {{-- TOMBOL PESAN --}}
+                            <a href="{{ route('order.create', ['product_id' => $product->id]) }}" class="flex justify-center items-center px-4 py-2 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition text-sm shadow-md">
+                                @if($locale == 'en') Order 
+                                @elseif($locale == 'zh') 订购 
+                                @else Pesan 
+                                @endif
+                            </a>
                         </div>
                     </div>
                 </div>
 
-                {{-- <div class="group border rounded-lg overflow-hidden hover:shadow-lg transition bg-white flex flex-col h-full">
-                    
-                    <div class="w-full bg-gray-100 relative">
-                        <img 
-                            src="{{ asset('uploads/products/' . $product->image) }}" 
-                            alt="{{ $product->name }}" 
-                            class="w-full transition duration-300 group-hover:scale-105"
-                            style="height: 250px; width: 100%; object-fit: cover; object-position: center;"
-                        >
-                        <span class="absolute top-2 right-2 bg-white text-xs font-bold px-2 py-1 rounded shadow text-gray-800">
-                            {{ $product->category }}
-                        </span>
-                    </div>
-                    
-                    <div class="p-5 flex flex-col flex-grow">
-                        <h3 class="text-lg font-bold text-gray-800 mb-1">{{ $product->name }}</h3>
-                        <p class="text-gray-500 font-medium mb-4">{{ __('messages.start_from') }} {{ number_format($product->price_min, 0, ',', '.') }} / pcs</p>
-                        
-                        <div class="mt-auto">
-                            <a href="{{ route('order.create') }}" class="block w-full text-center border-2 border-[#228B22] text-[#228B22] py-2 rounded-lg font-semibold hover:bg-[#228B22] hover:text-white transition">
-                                Pesan Sekarang
-                            </a>
-                            <a href="{{ route('products.show', $product->id) }}" class="block w-full text-center border-2 border-[#228B22] text-[#228B22] mt-2 py-2 rounded-lg font-semibold hover:bg-[#228B22] hover:text-white transition">
-                                Detail Produk
-                            </a>
-                        </div>
-                    </div>
-                </div> --}}
                 @endforeach
             </div>
 
