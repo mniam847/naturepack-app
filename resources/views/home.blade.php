@@ -269,9 +269,8 @@
                                 </p>
                                 
                                 {{-- HARGA (MATA UANG OTOMATIS) --}}
-                                <p class="text-lg font-bold text-green-600">
-                                    {{-- {{ formatCurrency($product->price_min) }} --}}
-                                    {{ Illuminate\Support\Number::currency($product->price_min, 'IDR', 'id') }}
+                                <p class="text-green-600 font-bold">
+                                    {{ formatCurrency($product->price_min) }}
                                 </p>
                             </div>
                         </div>

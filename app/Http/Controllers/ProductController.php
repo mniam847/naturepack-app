@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Product; // Panggil Model Product
+use App\Models\Product; 
 use Illuminate\Support\Str; 
 use Illuminate\Support\Facades\File;
 
@@ -19,55 +19,57 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         // 1. Validasi
-       $data = $request->validate([
+        $request->validate([
             'name'           => 'required|string|max:255',
             'category'       => 'required',
-            'price_min'      => 'required|numeric', // Harga
-            
-            // HAPUS 'stock' => 'required|integer',
-            // GANTI DENGAN INI:
-            'is_ready_stock' => 'required|in:0,1', // Hanya terima 0 atau 1
-            
+            'price_min'      => 'required|numeric',
+            'is_ready_stock' => 'required|in:0,1',
             'description'    => 'nullable',
-            'image'          => 'nullable|image|max:2048',
+            
+            // Validasi Gambar
+            'image'          => 'nullable|image|max:2048', // Gambar 1
+            'image2'         => 'nullable|image|max:2048', // Gambar 2
             
             // Bahasa Tambahan
             'name_en' => 'nullable', 'name_zh' => 'nullable',
             'description_en' => 'nullable', 'description_zh' => 'nullable',
         ]);
 
-        // 2. Siapkan Data
+        // 2. Siapkan Data Dasar
         $data = $request->all();
         
-        // Generate Slug otomatis dari Nama (Contoh: "Box Besar" -> "box-besar")
+        // Generate Slug
         $data['slug'] = Str::slug($request->name);
 
-        // Set status default berdasarkan stok
-        $data['is_ready_stock'] = ($request->stock > 0) ? 1 : 0;
-        $data['status'] = ($request->stock > 0) ? 'ready' : 'empty';
+        // Set status
+        $data['status'] = ($request->is_ready_stock == 1) ? 'ready' : 'empty';
 
-        // 3. Upload Gambar (Jika ada)
+        // 3. Upload Gambar 1 (UTAMA)
         if ($request->hasFile('image')) {
             $file = $request->file('image');
-            $filename = time() . '_' . $file->getClientOriginalName();
+            $filename = time() . '_1_' . $file->getClientOriginalName(); // Kasih tanda _1_
             $file->move(public_path('uploads/products'), $filename);
             $data['image'] = $filename;
         }
 
-        // 4. Simpan ke Database
+        // 4. Upload Gambar 2 (TAMBAHAN - INI YANG TADI KURANG)
+        if ($request->hasFile('image2')) {
+            $file2 = $request->file('image2');
+            $filename2 = time() . '_2_' . $file2->getClientOriginalName(); // Kasih tanda _2_
+            $file2->move(public_path('uploads/products'), $filename2);
+            $data['image2'] = $filename2;
+        }
+
+        // 5. Simpan ke Database
         Product::create($data);
 
-        // Ganti 'product.index' menjadi 'admin.products'
         return redirect()->route('admin.products')->with('success', 'Produk berhasil ditambahkan!');
-        }
+    }
 
     // 3. Tampilkan Detail Produk
     public function show($id)
     {
-        // Cari produk berdasarkan ID, kalau tidak ada tampilkan error 404
         $product = Product::findOrFail($id);
-
-        // Kirim data produk ke view 'product_show'
         return view('product_show', compact('product'));
     }
 
@@ -96,83 +98,92 @@ class ProductController extends Controller
 
         $products = $query->get();
 
-        // [BARU] Cek apakah ini request AJAX (Live Search)
         if ($request->ajax()) {
-            // Hanya render bagian grid produk saja
             return view('partials.products_grid', compact('products'))->render();
         }
 
         return view('products', compact('products'));
     }
 
-    // 5. FORM EDIT (INI YANG BELUM ADA DI SCREENSHOT)
+    // 5. FORM EDIT
     public function edit($id)
     {
         $product = Product::findOrFail($id);
-        // Kita akan buat file ini di langkah ke-2
         return view('admin.product_edit', compact('product'));
     }
 
-    // 6. PROSES UPDATE
+    // 6. PROSES UPDATE (PERBAIKAN LOGIKA DISINI)
     public function update(Request $request, $id)
     {
         $product = Product::findOrFail($id);
 
-        // 1. VALIDASI KITA LONGGARKAN
-        $data = $request->validate([
+        // 1. Validasi
+        $request->validate([
             'name'           => 'required|string|max:255',
             'category'       => 'required',
-            'price_min'      => 'required|numeric', // Harga
-            
-            // HAPUS 'stock' => 'required|integer',
-            // GANTI DENGAN INI:
-            'is_ready_stock' => 'required|in:0,1', // Hanya terima 0 atau 1
-            
+            'price_min'      => 'required|numeric',
+            'is_ready_stock' => 'required|in:0,1',
             'description'    => 'nullable',
             'image'          => 'nullable|image|max:2048',
-            
-            // Bahasa Tambahan
-            'name_en' => 'nullable', 'name_zh' => 'nullable',
-            'description_en' => 'nullable', 'description_zh' => 'nullable',
+            'image2'         => 'nullable|image|max:2048', // Tambahkan validasi image2
         ]);
 
         $input = $request->all();
+        $input['status'] = ($request->is_ready_stock == 1) ? 'ready' : 'empty';
 
-        // 2. PROSES UPLOAD
+        // 2. LOGIKA UPDATE GAMBAR 1
         if ($request->hasFile('image')) {
-            // Hapus gambar lama jika ada
+            // Hapus gambar lama 1
             if ($product->image && File::exists(public_path('uploads/products/' . $product->image))) {
                 File::delete(public_path('uploads/products/' . $product->image));
             }
-            
+            // Upload baru
             $file = $request->file('image');
-            
-            // Kita bersihkan nama file agar tidak ada spasi aneh
-            $cleanName = str_replace(' ', '_', $file->getClientOriginalName());
-            $fileName = time() . '_' . $cleanName;
-            
-            // Pindahkan file
+            $fileName = time() . '_1_' . str_replace(' ', '_', $file->getClientOriginalName());
             $file->move(public_path('uploads/products'), $fileName);
             $input['image'] = $fileName;
         } else {
-            // PENTING: Jika user tidak upload gambar baru, jangan update kolom image
-            // Agar gambar lama tidak hilang/jadi null
-            unset($input['image']);
+            // Jika tidak upload, biarkan data lama (jangan di-null-kan)
+            unset($input['image']); 
         }
 
-        // 3. UPDATE DATABASE
+        // 3. LOGIKA UPDATE GAMBAR 2 (GUNAKAN IF BARU, JANGAN ELSE IF)
+        if ($request->hasFile('image2')) {
+            // Hapus gambar lama 2
+            if ($product->image2 && File::exists(public_path('uploads/products/' . $product->image2))) {
+                File::delete(public_path('uploads/products/' . $product->image2));
+            }
+            // Upload baru
+            $file2 = $request->file('image2');
+            $fileName2 = time() . '_2_' . str_replace(' ', '_', $file2->getClientOriginalName());
+            $file2->move(public_path('uploads/products'), $fileName2);
+            $input['image2'] = $fileName2;
+        } else {
+            // Jika tidak upload, biarkan data lama
+            unset($input['image2']);
+        }
+
+        // 4. Update Database
         $product->update($input);
 
         return redirect()->route('admin.products')->with('success', 'Produk berhasil diperbarui.');
     }
 
-    // 7. HAPUS
+    // 7. HAPUS (Tambahkan hapus image2)
     public function destroy($id)
     {
         $product = Product::findOrFail($id);
+        
+        // Hapus File Gambar 1
         if ($product->image && File::exists(public_path('uploads/products/' . $product->image))) {
             File::delete(public_path('uploads/products/' . $product->image));
         }
+
+        // Hapus File Gambar 2 (TAMBAHAN)
+        if ($product->image2 && File::exists(public_path('uploads/products/' . $product->image2))) {
+            File::delete(public_path('uploads/products/' . $product->image2));
+        }
+
         $product->delete();
         return redirect()->route('admin.products')->with('success', 'Produk dihapus.');
     }

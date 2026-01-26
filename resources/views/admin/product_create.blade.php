@@ -57,9 +57,16 @@
             </div>
 
             {{-- GAMBAR --}}
-            <div>
-                <label class="block text-gray-700 font-semibold mb-2">Gambar Produk</label>
-                <input type="file" name="image" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100 transition"/>
+            <<div class="mb-4">
+                <label for="image" class="block text-gray-700 font-bold mb-2">Gambar Utama (Wajib)</label>
+                <input type="file" name="image" id="image" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-green-300">
+                <p class="text-xs text-gray-500 mt-1">Format: JPG, PNG. Max: 2MB</p>
+            </div>
+
+            <div class="mb-4">
+                <label for="image2" class="block text-gray-700 font-bold mb-2">Gambar Tambahan (Opsional)</label>
+                <input type="file" name="image2" id="image2" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-green-300">
+                <p class="text-xs text-gray-500 mt-1">Gambar detail atau tampak samping.</p>
             </div>
         </div>
 

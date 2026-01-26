@@ -15,6 +15,7 @@ class Product extends Model
         'category',
         'description',
         'image',
+        'image2',
         'price_min',      
         'is_ready_stock', 
         'status',         
