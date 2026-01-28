@@ -95,4 +95,12 @@ return [
 
     // Contact Page
     'faq_title' => '常见问题解答',
+
+    // ... baris kode lainnya ...
+
+    'usa_factory_title' => '拓展业务版图：美国得克萨斯州制造基地',
+    'usa_factory_desc_1' => '我们很自豪地宣布，我们在美国得克萨斯州 (Texas) 设立了全新的制造工厂。这一扩展使我们能够以更高的效率和速度为北美合作伙伴提供服务。',
+    'usa_factory_desc_2' => '通过建立本地生产基地，NaturePack 能够确保严格的质量控制，并为美国市场提供更快的交付速度，全面符合国际制造标准。',
+
+    // ... baris kode lainnya ...
 ];

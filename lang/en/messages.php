@@ -95,4 +95,8 @@ return [
 
     // FAQ Page
     'faq_title' => 'FAQ',
+
+    'usa_factory_title' => 'Expanding Our Reach: Manufacturing in Texas, USA',
+'usa_factory_desc_1' => 'We are proud to announce our manufacturing facility located in Texas, United States. This expansion allows us to serve our North American partners with greater efficiency and speed.',
+'usa_factory_desc_2' => 'By establishing a local presence, NaturePack ensures strict quality control and faster delivery times for the US market, adhering to international manufacturing standards.',
 ];

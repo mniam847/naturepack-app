@@ -98,4 +98,7 @@ return [
 
     // Halaman FAQ
     'faq_title' => 'FAQ',
+    'usa_factory_title' => 'Memperluas Jangkauan: Pabrik Manufaktur di Texas, AS',
+'usa_factory_desc_1' => 'Kami bangga mengumumkan fasilitas manufaktur kami yang berlokasi di Texas, Amerika Serikat. Ekspansi ini memungkinkan kami melayani mitra di Amerika Utara dengan efisiensi dan kecepatan yang lebih tinggi.',
+'usa_factory_desc_2' => 'Dengan kehadiran lokal, NaturePack memastikan kontrol kualitas yang ketat dan waktu pengiriman yang lebih cepat untuk pasar AS, sesuai dengan standar manufaktur internasional.',
 ];

@@ -75,7 +75,7 @@
 {{-- ====================== --}}
 {{-- ABOUT SECTION          --}}
 {{-- ====================== --}}
-<section class="py-20 bg-grey-500 overflow-hidden">
+<section class="py-20 bg-gray-50 overflow-hidden">
     <div class="container mx-auto px-6 lg:px-12">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div class="relative z-10">
@@ -149,26 +149,53 @@
 </section>
 
 {{-- ====================== --}}
-{{-- CUSTOMER LOGOS         --}}
+{{-- USA FACTORY SECTION    --}}
 {{-- ====================== --}}
-<section class="py-16 bg-grey-500">
+<section class="py-20 bg-gray-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-12">
-            <h2 class="text-3xl font-bold text-gray-900">{{ __('messages.customer_title') }}</h2>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-center">
-            <div class="bg-white rounded-lg shadow-sm p-4 h-32 flex items-center justify-center hover:shadow-md transition">
-                <img src="{{ asset('images/customer/BTR.jpg') }}" alt="Logo Nature Pack" class="max-h-10 w-auto object-contain">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            
+            {{-- IMAGE SIDE --}}
+            <div class="relative order-2 md:order-1">
+                <div class="absolute -inset-4 bg-[#77C377]/20 rounded-2xl blur-lg transform -rotate-2"></div>
+                <img src="{{ asset('images/Picture1.png') }}" 
+                     alt="NaturePack Texas Factory" 
+                     class="relative w-full h-auto rounded-2xl shadow-xl transform transition duration-500 hover:scale-[1.01] z-10">
+                
+                {{-- Optional Badge Overlay --}}
+                <div class="absolute bottom-6 left-6 z-20 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-lg shadow-lg border-l-4 border-[#77C377]">
+                    <p class="text-xs font-bold text-gray-500 uppercase">Location</p>
+                    <p class="text-sm font-bold text-gray-900">Texas, United States</p>
+                </div>
             </div>
-            <div class="bg-white rounded-lg shadow-sm p-4 h-32 flex items-center justify-center hover:shadow-md transition">
-                <img src="{{ asset('images/customer/Hiron.jpg') }}" alt="Logo Nature Pack" class="max-h-10 w-auto object-contain">
+
+            {{-- TEXT SIDE --}}
+            <div class="order-1 md:order-2">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6 leading-tight">
+                    {{ __('messages.usa_factory_title', ['default' => 'Expanding Our Reach: Manufacturing in Texas, USA']) }}
+                </h2>
+                <div class="w-20 h-1.5 bg-[#77C377] mb-6 rounded-full"></div>
+                
+                <p class="text-lg text-gray-600 mb-6 leading-relaxed">
+                    {{ __('messages.usa_factory_desc_1', ['default' => 'We are proud to announce our manufacturing facility located in Texas, United States. This expansion allows us to serve our North American partners with greater efficiency and speed.']) }}
+                </p>
+                
+                <p class="text-gray-500 mb-8 leading-relaxed">
+                    {{ __('messages.usa_factory_desc_2', ['default' => 'By establishing a local presence, NaturePack ensures strict quality control and faster delivery times for the US market, adhering to international manufacturing standards.']) }}
+                </p>
+
+                <div class="flex items-center gap-4">
+                    <div class="flex items-center gap-2 text-[#228B22] font-semibold bg-green-50 px-4 py-2 rounded-lg">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <span>Global Standard</span>
+                    </div>
+                    <div class="flex items-center gap-2 text-[#228B22] font-semibold bg-green-50 px-4 py-2 rounded-lg">
+                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                        <span>High Efficiency</span>
+                    </div>
+                </div>
             </div>
-            <div class="bg-white rounded-lg shadow-sm p-4 h-32 flex items-center justify-center hover:shadow-md transition">
-                <img src="{{ asset('images/customer/Borine.jpg') }}" alt="Logo Nature Pack" class="max-h-10 w-auto object-contain">
-            </div>
-            <div class="bg-white rounded-lg shadow-sm p-4 h-32 flex items-center justify-center hover:shadow-md transition">
-                <img src="{{ asset('images/customer/VOK.jpg') }}" alt="Logo Nature Pack" class="max-h-10 w-auto object-contain">
-            </div>
+
         </div>
     </div>
 </section>
@@ -295,7 +322,7 @@
 {{-- ====================== --}}
 {{-- HOW TO ORDER           --}}
 {{-- ====================== --}}
-<section class="py-16 bg-grey-500">
+<section class="py-16 bg-gray-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-12">
             <h2 class="text-3xl font-bold text-gray-900">{{ __('messages.how_to_order') }}</h2>
